@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires, lodash/import-scope
+// eslint-disable-next-line
 const { merge } = require('lodash');
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { universalRestrictedImportsConfig, universalImportOrderConfig } = require('./internal');
 
 module.exports = {
