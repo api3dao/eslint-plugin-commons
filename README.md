@@ -1,4 +1,4 @@
-# eslint
+# eslint-plugin-commons
 
 > ESLint configurations used across API3 projects.
 
@@ -21,11 +21,7 @@ For example:
 
 ```js
 module.exports = {
-  // Unfortunately, the plugin does not comply with official ESLint naming convention which demands the plugin to be
-  // published as "@api3/eslint-config-commons". As a workaround, you need to use a relative path instead.
-  //
-  // See: https://github.com/eslint/eslintrc/blob/242d569020dfe4f561e4503787b99ec016337457/lib/config-array-factory.js#L920
-  extends: ['./node_modules/@api3/commons/dist/eslint/universal', './node_modules/@api3/commons/dist/eslint/jest'],
+  extends: ['plugin:@api3/eslint-plugin-commons/universal', 'plugin:@api3/eslint-plugin-commons/jest'],
   parserOptions: {
     // We focus primarily on TS and for that we need to specify the TS configs which is project specific. The following
     // is a common monorepo setup (root config and a config for each package).
@@ -70,18 +66,8 @@ To override a rule, you can use the `rules` section key in your `.eslintrc.js` f
   rules: {
     'check-file/folder-naming-convention': 'off', // Turns of the kebab-case convention for folder names.
     'unicorn/filename-case': 'off' // Turns of the kebab-case convention for filenames.
-
     'import/no-default-export': 'off', // Turns off the rule that disallows default exports.
     'import/prefer-default-export': 'error' // Turns on the rule that prefers default exports.
   }
 }
 ```
-
-## Development notes
-
-- The implementation is intentionally written in JS so it can be used to lint the project itself. You can see that the
-  root `.eslintrc.js` extends the configuration files from this module.
-
-- Unfortunately, the plugin does not comply with official ESLint naming convention which demands the plugin to be
-  published as "@api3/eslint-config-commons". As a workaround, project need to use a relative path instead. See:
-  https://github.com/eslint/eslintrc/blob/242d569020dfe4f561e4503787b99ec016337457/lib/config-array-factory.js#L920
