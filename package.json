@@ -1,7 +1,10 @@
 {
   "name": "@api3/eslint-plugin-commons",
   "version": "0.0.1",
-  "keywords": [],
+  "keywords": [
+    "eslint",
+    "eslint-plugin"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18.14.0"
@@ -11,6 +14,11 @@
     "type": "git",
     "url": "https://github.com/api3dao/eslint-plugin-commons"
   },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "src/"
+  ],
   "scripts": {
     "eslint:check": "eslint --report-unused-disable-directives --cache --ext js,ts,tsx,jsx . --max-warnings 0",
     "eslint:fix": "pnpm run eslint:check --fix",
