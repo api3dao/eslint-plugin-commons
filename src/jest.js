@@ -16,7 +16,7 @@ module.exports = {
         jest: true,
       },
       plugins: ['jest'],
-      extends: ['plugin:jest/all', 'plugin:jest-formatting/recommended'],
+      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended'],
       rules: {
         'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
         'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
