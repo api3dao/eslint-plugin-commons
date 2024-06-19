@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=18.14.0"
+    "node": ">=20.14.0"
   },
   "sideEffects": false,
   "repository": {
