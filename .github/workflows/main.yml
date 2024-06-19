@@ -1,0 +1,33 @@
+name: Continuous Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    name: Build, lint and test - Node ${{ matrix.node-version }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.8.0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm run prettier:check && pnpm run eslint:check
