@@ -18,19 +18,19 @@ module.exports = {
       plugins: ['jest'],
       extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended'],
       rules: {
-        'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
-        'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
-        'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
-        'jest/require-top-level-describe': 'off', // Multiple top-level describe blocks or tests can be acceptable.
         'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
-        'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
         'jest/no-hooks': [
           'error', // We advocate for setup functions over beforeXXX hooks. However, afterXyz hooks are sometimes indispensable, like for resetting Jest timers. See: https://kentcdodds.com/blog/avoid-nesting-when-youre-testing#inline-it.
           {
             allow: ['afterEach', 'afterAll'],
           },
         ],
-        'prefer-lowercase-title': 'off', // Sometimes we want to start the test with a capital letter and some words are all uppercase (e.g. AWS).
+        'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
+        'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
+        'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
+        'jest/require-top-level-describe': 'off', // Multiple top-level describe blocks or tests can be acceptable.
+        'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
+        'prefer-lowercase-title': 'off', // Sometimes we want to start the test with a capital letter and some words are all uppercase (e.g. AWS).,
       },
     },
   ],
