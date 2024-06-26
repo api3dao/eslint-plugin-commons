@@ -20,6 +20,7 @@ module.exports = {
       rules: {
         'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
         'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
+        'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
         'jest/require-top-level-describe': 'off', // Multiple top-level describe blocks or tests can be acceptable.
         'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
         'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
