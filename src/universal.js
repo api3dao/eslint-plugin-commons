@@ -19,7 +19,7 @@ module.exports = {
     'plugin:promise/recommended',
     'plugin:lodash/recommended',
   ],
-  plugins: ['@typescript-eslint', 'deprecation', 'functional', 'unicorn', 'check-file', 'import', 'lodash'],
+  plugins: ['@shopify', '@typescript-eslint', 'check-file', 'deprecation', 'functional', 'import', 'lodash', 'unicorn'],
   rules: {
     /* Rule definitions and overrides for standard ESLint rules */
     camelcase: 'error',
@@ -197,6 +197,11 @@ module.exports = {
     // This rule unfortunately does not detect deprecated properties. See:
     // https://github.com/gund/eslint-plugin-deprecation/issues/13/
     'deprecation/deprecation': 'error',
+
+    /* Select rules from Shopify */
+    '@shopify/prefer-early-return': 'error',
+    '@shopify/prefer-module-scope-constants': 'error',
+    '@shopify/no-ancestor-directory-import': 'error',
   },
   overrides: [
     // Overrides for Jest tests.
