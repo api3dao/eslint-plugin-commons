@@ -210,7 +210,6 @@ module.exports = {
     /* Select rules from Shopify */
     '@shopify/prefer-early-return': 'error',
     '@shopify/prefer-module-scope-constants': 'error',
-    '@shopify/no-ancestor-directory-import': 'error',
   },
   overrides: [
     // Overrides for Jest tests.
