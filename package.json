@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@shopify/eslint-plugin": "^45.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "eslint-config-next": "^14.2.5",
     "eslint-plugin-check-file": "^2.8.0",
     "eslint-plugin-cypress": "^3.4.0",
