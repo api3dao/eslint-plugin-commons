@@ -191,7 +191,7 @@ module.exports = {
 
     /* Rule overrides for "functional" plugin */
     'functional/no-classes': 'error', // Functions are all we need.
-    'functional/no-promise-reject': 'error',
+    'functional/no-promise-reject': 'off', // Expanded scope of the rule is too restrictive against using throw
     'functional/no-try-statements': 'error', // Use go utils instead.
     'functional/prefer-tacit': 'off', // The rule is dangerous. See: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-callback-reference.md.
 
