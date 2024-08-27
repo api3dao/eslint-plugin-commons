@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-  PLUGIN_DIR: eslint-plugin-commons
   COMMONS_DIR: commons
 
 jobs:
@@ -15,13 +14,9 @@ jobs:
     steps:
       - name: Checkout eslint-plugin-commons
         uses: actions/checkout@v4
-        with:
-          path: ${{ env.PLUGIN_DIR }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          package_json_file: ${{ env.PLUGIN_DIR }}/package.json
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -30,14 +25,12 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies for eslint-plugin-commons
-        working-directory: ${{ env.PLUGIN_DIR }}
         run: pnpm install
 
       - name: Package eslint-plugin-commons
-        working-directory: ${{ env.PLUGIN_DIR }}
         run: |
           PACKAGE_PATH=$(pnpm pack | tail -n 1)
-          echo "PACKAGE_PATH=${{ env.PLUGIN_DIR }}/$PACKAGE_PATH" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
 
       - name: Checkout commons repository
         uses: actions/checkout@v4
