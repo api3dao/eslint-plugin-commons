@@ -1,9 +1,12 @@
-name: Check Breaking Changes in Commons
+name: Check Breaking Changes
 
 on:
   pull_request:
     branches:
       - main
+
+env:
+  repo_name: commons
 
 jobs:
   check-breaking-changes:
@@ -29,20 +32,20 @@ jobs:
           PACKAGE_PATH=$(pnpm pack | tail -n 1)
           echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
 
-      - name: Checkout commons repository
+      - name: Checkout api3dao/${{ env.repo_name }} repository
         uses: actions/checkout@v4
         with:
-          repository: api3dao/commons
-          path: commons
+          repository: api3dao/${{ env.repo_name }}
+          path: ${{ env.repo_name }}
 
-      - name: Move commons outside of the repo
-        run: mv commons ../
+      - name: Move ${{ env.repo_name }} outside of the repo
+        run: mv ${{ env.repo_name }} ../
 
-      - name: Install packaged version in commons
-        working-directory: ../commons
+      - name: Install packaged version in ${{ env.repo_name }}
+        working-directory: ../${{ env.repo_name }}
         run: |
           pnpm add -D file:../eslint-plugin-commons/${{ env.PACKAGE_PATH }}
 
-      - name: Run ESLint on commons
-        working-directory: ../commons
+      - name: Run ESLint on ${{ env.repo_name }}
+        working-directory: ../${{ env.repo_name }}
         run: pnpm eslint .
