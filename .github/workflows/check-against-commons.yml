@@ -1,0 +1,43 @@
+name: Check Breaking Changes in Commons
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-breaking-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Package repository
+        run: pnpm pack
+
+      - name: Checkout commons repository
+        uses: actions/checkout@v4
+        with:
+          repository: api3dao/commons
+          path: commons
+
+      - name: Install packaged version in commons
+        working-directory: commons
+        run: |
+          pnpm add -D file:${{ github.workspace }}/*.tgz
+
+      - name: Run ESLint on commons
+        working-directory: commons
+        run: pnpm eslint .
