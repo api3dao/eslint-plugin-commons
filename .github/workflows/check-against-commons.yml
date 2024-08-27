@@ -41,7 +41,7 @@ jobs:
       - name: Install packaged version in commons
         working-directory: ../commons
         run: |
-          pnpm add -D file:eslint-plugin-commons/${{ env.PACKAGE_PATH }}
+          pnpm add -D file:../eslint-plugin-commons/${{ env.PACKAGE_PATH }}
 
       - name: Run ESLint on commons
         working-directory: ../commons
