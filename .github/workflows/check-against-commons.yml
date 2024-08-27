@@ -5,12 +5,18 @@ on:
     branches:
       - main
 
+env:
+  PLUGIN_DIR: eslint-plugin-commons
+  COMMONS_DIR: commons
+
 jobs:
   check-breaking-changes:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repo
+      - name: Checkout eslint-plugin-commons
         uses: actions/checkout@v4
+        with:
+          path: ${{ env.PLUGIN_DIR }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -21,23 +27,27 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: Install dependencies for eslint-plugin-commons
+        working-directory: ${{ env.PLUGIN_DIR }}
         run: pnpm install
 
-      - name: Package repository
-        run: pnpm pack
+      - name: Package eslint-plugin-commons
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: |
+          PACKAGE_PATH=$(pnpm pack | tail -n 1)
+          echo "PACKAGE_PATH=${{ env.PLUGIN_DIR }}/$PACKAGE_PATH" >> $GITHUB_ENV
 
       - name: Checkout commons repository
         uses: actions/checkout@v4
         with:
           repository: api3dao/commons
-          path: commons
+          path: ${{ env.COMMONS_DIR }}
 
       - name: Install packaged version in commons
-        working-directory: commons
+        working-directory: ${{ env.COMMONS_DIR }}
         run: |
-          pnpm add -D file:${{ github.workspace }}/*.tgz
+          pnpm add -D file:../${{ env.PACKAGE_PATH }}
 
       - name: Run ESLint on commons
-        working-directory: commons
+        working-directory: ${{ env.COMMONS_DIR }}
         run: pnpm eslint .
