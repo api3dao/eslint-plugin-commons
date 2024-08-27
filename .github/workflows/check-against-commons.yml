@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  COMMONS_DIR: commons
+  COMMONS_DIR: ../commons
 
 jobs:
   check-breaking-changes:
