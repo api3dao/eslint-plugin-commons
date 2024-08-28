@@ -11,7 +11,7 @@ module.exports = {
   // Configuration for specific files is done under 'overrides'.
   overrides: [
     {
-      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.test.js', '**/*.test.jsx'],
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.feature.ts', '**/*.feature.tsx', '**/*.test.js', '**/*.test.jsx'],
       env: {
         jest: true,
       },
