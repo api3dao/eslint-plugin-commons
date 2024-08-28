@@ -38,7 +38,7 @@ jobs:
           repository: api3dao/${{ env.repo_name }}
           path: ${{ env.repo_name }}
 
-      # Workaround for inability clone outside of workspace directory
+      # Workaround for inability to clone outside of workspace directory
       # See: https://github.com/actions/checkout/issues/197#issuecomment-603651324
       - name: Move ${{ env.repo_name }} directory outside of eslint-plugin-commons repo
         run: mv ${{ env.repo_name }} ../
