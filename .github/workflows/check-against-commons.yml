@@ -1,0 +1,53 @@
+name: Check for breaking changes
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  repo_name: commons
+
+jobs:
+  check-breaking-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout eslint-plugin-commons
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies for eslint-plugin-commons
+        run: pnpm install
+
+      - name: Package eslint-plugin-commons
+        run: |
+          PACKAGE_PATH=$(pnpm pack | tail -n 1)
+          echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
+
+      - name: Checkout api3dao/${{ env.repo_name }} repo
+        uses: actions/checkout@v4
+        with:
+          repository: api3dao/${{ env.repo_name }}
+          path: ${{ env.repo_name }}
+
+      # Workaround for inability to clone outside of workspace directory
+      # See: https://github.com/actions/checkout/issues/197#issuecomment-603651324
+      - name: Move ${{ env.repo_name }} directory outside of eslint-plugin-commons repo
+        run: mv ${{ env.repo_name }} ../
+
+      - name: Install packaged eslint-plugin-commons in ${{ env.repo_name }}
+        working-directory: ../${{ env.repo_name }}
+        run: |
+          pnpm add -D file:../eslint-plugin-commons/${{ env.PACKAGE_PATH }}
+
+      - name: Run ESLint on ${{ env.repo_name }}
+        working-directory: ../${{ env.repo_name }}
+        run: pnpm eslint .
