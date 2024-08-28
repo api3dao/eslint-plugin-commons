@@ -1,4 +1,4 @@
-name: Check Breaking Changes
+name: Check for breaking changes
 
 on:
   pull_request:
@@ -32,16 +32,18 @@ jobs:
           PACKAGE_PATH=$(pnpm pack | tail -n 1)
           echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
 
-      - name: Checkout api3dao/${{ env.repo_name }} repository
+      - name: Checkout api3dao/${{ env.repo_name }} repo
         uses: actions/checkout@v4
         with:
           repository: api3dao/${{ env.repo_name }}
           path: ${{ env.repo_name }}
 
-      - name: Move ${{ env.repo_name }} outside of the repo
+      # Workaround for inability clone outside of workspace directory
+      # See: https://github.com/actions/checkout/issues/197#issuecomment-603651324
+      - name: Move ${{ env.repo_name }} directory outside of eslint-plugin-commons repo
         run: mv ${{ env.repo_name }} ../
 
-      - name: Install packaged version in ${{ env.repo_name }}
+      - name: Install packaged eslint-plugin-commons in ${{ env.repo_name }}
         working-directory: ../${{ env.repo_name }}
         run: |
           pnpm add -D file:../eslint-plugin-commons/${{ env.PACKAGE_PATH }}
