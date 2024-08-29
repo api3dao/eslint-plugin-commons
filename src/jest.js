@@ -20,6 +20,7 @@ module.exports = {
       rules: {
         'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
         'jest/no-hooks': 'off', // Would be time consuming to implement in existing repos.
+        'jest/padding-around-expect-groups': 'off', // Adds a lot of excess whitespace
         'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
         'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
         'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
