@@ -25,7 +25,8 @@
     "eslint:fix": "pnpm run eslint:check --fix",
     "prepare": "husky",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
-    "prettier:fix": "prettier --write \"./**/*.{js,ts,md,json}\""
+    "prettier:fix": "prettier --write \"./**/*.{js,ts,md,json}\"",
+    "release:tag": "node scripts/tag-and-release.js"
   },
   "dependencies": {
     "@shopify/eslint-plugin": "^45.0.0",
@@ -48,6 +49,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@api3/commons": "0.13.2",
     "@types/lodash": "^4.17.7",
     "eslint": "^8.57.1",
     "husky": "^9.1.6",
