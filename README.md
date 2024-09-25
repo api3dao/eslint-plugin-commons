@@ -71,3 +71,13 @@ To override a rule, you can use the `rules` section key in your `.eslintrc.js` f
   }
 }
 ```
+
+## For developers
+
+This sections is intended for developers of this repo.
+
+### Release
+
+1. Run `pnpm version [major|minor|patch]` by choosing the appropriate version bump.
+2. Push the changes to the `main`, either directly or via a pull request.
+3. The CI will register a new version and handle the release process.
