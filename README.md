@@ -31,7 +31,7 @@ module.exports = {
 ```
 
 If you are using TS, it's possible that ESLint will complain about `.js` files not being present in the project. This
-can likely be fixed by adding `allowJs: true` to the `tsconfig.json` file.
+can likely be fixed by adding `"allowJs": true` to the `tsconfig.json` file.
 
 ### Linting commands
 
