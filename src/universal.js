@@ -152,6 +152,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off', // Too restrictive, often false yields to more verbose code.
     '@typescript-eslint/no-explicit-any': 'off', // Using "any" is sometimes necessary.
     '@typescript-eslint/no-extra-parens': 'off', // Conflicts with prettier.
+    '@typescript-eslint/no-floating-promises': 'error', // Explicitly handling promises avoids tricky bugs.
     '@typescript-eslint/no-magic-numbers': 'off', // Too restrictive. There is often nothing wrong with inlining numbers.
     '@typescript-eslint/no-misused-promises': [
       'error',
