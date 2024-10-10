@@ -98,6 +98,7 @@ module.exports = {
     'unicorn/no-array-callback-reference': 'error', // Explicitly turned on, because it was initially disabled and "point free" notation was enforced using "functional/prefer-tacit". That said, the point free pattern is dangerous in JS. See: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-callback-reference.md.
     'unicorn/no-array-for-each': 'off', // We use .forEach extensively across the api3dao org and even though this can be solved with --fix and there are benefits, it will generate a lot of friction.
     'unicorn/no-array-reduce': 'off', // We are OK with using reduce occasionally, but I agree with the author that the code using reduce can easily get complex.
+    'unicorn/no-for-loop': 'off', // Simple for loops are sometimes fine.
     'unicorn/no-nested-ternary': 'off', // This rule is smarter than the standard ESLint rule, but conflicts with prettier so it needs to be turned off. Nested ternaries are very unreadable so it's OK if all of them are flagged.
     'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
     'unicorn/no-object-as-default-parameter': 'off', // Too restrictive. TypeScript can ensure that the default value matches the type.
