@@ -64,8 +64,8 @@ importers:
         version: 4.17.21
     devDependencies:
       '@api3/commons':
-        specifier: 0.13.3
-        version: 0.13.3
+        specifier: 0.13.4
+        version: 0.13.4
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.13
@@ -73,8 +73,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       husky:
-        specifier: ^9.1.6
-        version: 9.1.6
+        specifier: ^9.1.7
+        version: 9.1.7
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -85,8 +85,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@api3/commons@0.13.3':
-    resolution: {integrity: sha512-oHTOV6rygP5nA2gKh7oV5wFTwLJC+njUxRIEe48FZwjTXdjfXaLH6aX/j09XOmW+TjC3sQ/ecJsFCanBQ3ugoQ==}
+  '@api3/commons@0.13.4':
+    resolution: {integrity: sha512-DEAopivj60gdVO4pm1y0gcbnUh5H4A69Wh1pWFVmYf8hJIaC03ovXC01E2Lp+G1Ot9jHndrPM6kwr4XCzwQjVw==}
     engines: {node: '>=18.14.0'}
 
   '@api3/ois@2.3.2':
@@ -417,8 +417,8 @@ packages:
     resolution: {integrity: sha512-MB4AYDsM5jhIHro/dq4ix1iWTLGToIGk6cWF5L6vanFaMble5jTX/UBQyiv05HsWnwUtY8JrfHy2LWfKwihqMw==}
     engines: {node: '>= 18'}
 
-  '@octokit/types@13.5.1':
-    resolution: {integrity: sha512-F41lGiWBKPIWPBgjSvaDXTTQptBujnozENAK3S//nj7xsFdYdirImKlBB/hTjr+Vii68SM+8jG3UJWRa6DMuDA==}
+  '@octokit/types@13.6.1':
+    resolution: {integrity: sha512-PHZE9Z+kWXb23Ndik8MKPirBPziOc0D2/3KH1P+6jK5nGWe96kadZuE4jev2/Jq7FvIfTlT2Ltg8Fv2x1v0a5g==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -1494,8 +1494,8 @@ packages:
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
 
-  husky@9.1.6:
-    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -1753,6 +1753,10 @@ packages:
 
   logform@2.6.1:
     resolution: {integrity: sha512-CdaO738xRapbKIMVn2m4F6KTj4j7ooJ8POVnebSgKo3KBz5axNXRAL7ZdRjIV6NOr2Uf4vjtRkxrFETOioCqSA==}
+    engines: {node: '>= 12.0.0'}
+
+  logform@2.7.0:
+    resolution: {integrity: sha512-TFYA4jnP7PVbmlBIfhlSe+WKxs9dklXMTEGcBCIvLhE/Tn3H6Gk1norupVW7m5Cnd4bLcr08AytbyV/xj7f/kQ==}
     engines: {node: '>= 12.0.0'}
 
   loose-envify@1.4.0:
@@ -2320,12 +2324,12 @@ packages:
   winston-console-format@1.0.8:
     resolution: {integrity: sha512-dq7t/E0D0QRi4XIOwu6HM1+5e//WPqylH88GVjKEhQVrzGFg34MCz+G7pMJcXFBen9C0kBsu5GYgbYsE2LDwKw==}
 
-  winston-transport@4.7.1:
-    resolution: {integrity: sha512-wQCXXVgfv/wUPOfb2x0ruxzwkcZfxcktz6JIMUaPLmcNhO4bZTwA/WtDWK74xV3F2dKu8YadrFv0qhwYjVEwhA==}
+  winston-transport@4.9.0:
+    resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
     engines: {node: '>= 12.0.0'}
 
-  winston@3.14.2:
-    resolution: {integrity: sha512-CO8cdpBB2yqzEf8v895L+GNKYJiEq8eKlHU38af3snQBQ+sdAIUepjMSguOIJC7ICbzm0ZI+Af2If4vIJrtmOg==}
+  winston@3.17.0:
+    resolution: {integrity: sha512-DLiFIXYC5fMPxaRg832S6F5mJYvePtmO5G9v9IgUFPhXm9/GkXarH/TUrBAVzhTCzAj9anE/+GjrgXp/54nOgw==}
     engines: {node: '>= 12.0.0'}
 
   word-wrap@1.2.5:
@@ -2372,17 +2376,17 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@api3/commons@0.13.3':
+  '@api3/commons@0.13.4':
     dependencies:
       '@api3/ois': 2.3.2
       '@api3/promise-utils': 0.4.0
       '@octokit/rest': 20.1.1
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       axios: 1.7.7
       dotenv: 16.4.5
       ethers: 5.7.2
       lodash: 4.17.21
-      winston: 3.14.2
+      winston: 3.17.0
       winston-console-format: 1.0.8
       zod: 3.23.8
     transitivePeerDependencies:
@@ -2900,19 +2904,19 @@ snapshots:
       '@octokit/graphql': 7.1.0
       '@octokit/request': 8.4.0
       '@octokit/request-error': 5.1.0
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       before-after-hook: 2.2.3
       universal-user-agent: 6.0.1
 
   '@octokit/endpoint@9.0.5':
     dependencies:
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       universal-user-agent: 6.0.1
 
   '@octokit/graphql@7.1.0':
     dependencies:
       '@octokit/request': 8.4.0
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       universal-user-agent: 6.0.1
 
   '@octokit/openapi-types@22.2.0': {}
@@ -2920,7 +2924,7 @@ snapshots:
   '@octokit/plugin-paginate-rest@11.3.1(@octokit/core@5.2.0)':
     dependencies:
       '@octokit/core': 5.2.0
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
 
   '@octokit/plugin-request-log@4.0.1(@octokit/core@5.2.0)':
     dependencies:
@@ -2929,11 +2933,11 @@ snapshots:
   '@octokit/plugin-rest-endpoint-methods@13.2.2(@octokit/core@5.2.0)':
     dependencies:
       '@octokit/core': 5.2.0
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
 
   '@octokit/request-error@5.1.0':
     dependencies:
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       deprecation: 2.3.1
       once: 1.4.0
 
@@ -2941,7 +2945,7 @@ snapshots:
     dependencies:
       '@octokit/endpoint': 9.0.5
       '@octokit/request-error': 5.1.0
-      '@octokit/types': 13.5.1
+      '@octokit/types': 13.6.1
       universal-user-agent: 6.0.1
 
   '@octokit/rest@20.1.1':
@@ -2951,7 +2955,7 @@ snapshots:
       '@octokit/plugin-request-log': 4.0.1(@octokit/core@5.2.0)
       '@octokit/plugin-rest-endpoint-methods': 13.2.2(@octokit/core@5.2.0)
 
-  '@octokit/types@13.5.1':
+  '@octokit/types@13.6.1':
     dependencies:
       '@octokit/openapi-types': 22.2.0
 
@@ -3779,8 +3783,8 @@ snapshots:
       '@typescript-eslint/parser': 8.15.0(eslint@8.57.1)(typescript@5.4.5)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
@@ -3802,12 +3806,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
     dependencies:
       debug: 4.3.5
       enhanced-resolve: 5.17.0
       eslint: 8.57.1
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
@@ -3829,14 +3833,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.15.0(eslint@8.57.1)(typescript@5.4.5)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -3935,7 +3939,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -3946,7 +3950,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.15.0(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -4447,7 +4451,7 @@ snapshots:
 
   hosted-git-info@2.8.9: {}
 
-  husky@9.1.6: {}
+  husky@9.1.7: {}
 
   ignore@5.3.1: {}
 
@@ -4680,6 +4684,15 @@ snapshots:
   lodash@4.17.21: {}
 
   logform@2.6.1:
+    dependencies:
+      '@colors/colors': 1.6.0
+      '@types/triple-beam': 1.3.5
+      fecha: 4.2.3
+      ms: 2.1.3
+      safe-stable-stringify: 2.5.0
+      triple-beam: 1.4.1
+
+  logform@2.7.0:
     dependencies:
       '@colors/colors': 1.6.0
       '@types/triple-beam': 1.3.5
@@ -5310,25 +5323,25 @@ snapshots:
       logform: 2.6.1
       triple-beam: 1.4.1
 
-  winston-transport@4.7.1:
+  winston-transport@4.9.0:
     dependencies:
-      logform: 2.6.1
+      logform: 2.7.0
       readable-stream: 3.6.2
       triple-beam: 1.4.1
 
-  winston@3.14.2:
+  winston@3.17.0:
     dependencies:
       '@colors/colors': 1.6.0
       '@dabh/diagnostics': 2.0.3
       async: 3.2.6
       is-stream: 2.0.1
-      logform: 2.6.1
+      logform: 2.7.0
       one-time: 1.0.0
       readable-stream: 3.6.2
       safe-stable-stringify: 2.5.0
       stack-trace: 0.0.10
       triple-beam: 1.4.1
-      winston-transport: 4.7.1
+      winston-transport: 4.9.0
 
   word-wrap@1.2.5: {}
 
