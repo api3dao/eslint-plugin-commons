@@ -48,7 +48,7 @@ module.exports = {
       },
     ],
     'prefer-exponentiation-operator': 'error',
-    'prefer-named-capture-group': 'error',
+    'prefer-named-capture-group': 'off', // Forces you to add a group name even if it is useless.
     'prefer-object-spread': 'error',
     'prefer-spread': 'error',
     'prefer-template': 'error',
