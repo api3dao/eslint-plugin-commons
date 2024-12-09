@@ -51,11 +51,11 @@
   "devDependencies": {
     "@api3/commons": "0.13.4",
     "@types/lodash": "^4.17.13",
-    "eslint": "^8.57.1",
+    "eslint": "^9.16.0",
     "husky": "^9.1.7",
     "prettier": "^3.4.1"
   },
   "peerDependencies": {
-    "eslint": "^8.57.1"
+    "eslint": "^9.16.0"
   }
 }
