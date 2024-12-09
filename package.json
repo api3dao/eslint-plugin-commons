@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@shopify/eslint-plugin": "^45.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.16.0",
-    "@typescript-eslint/parser": "^8.16.0",
-    "eslint-config-next": "^14.2.18",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "eslint-config-next": "^14.2.19",
     "eslint-plugin-check-file": "^2.8.0",
     "eslint-plugin-cypress": "^3.6.0",
     "eslint-plugin-deprecation": "^3.0.0",
