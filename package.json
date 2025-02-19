@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=18.14.0"
+    "node": ">=18.18.0"
   },
   "packageManager": "pnpm@9.15.2",
   "sideEffects": false,
@@ -21,7 +21,7 @@
     "src/"
   ],
   "scripts": {
-    "eslint:check": "eslint --report-unused-disable-directives --cache --ext js,ts,tsx,jsx . --max-warnings 0",
+    "eslint:check": "eslint --report-unused-disable-directives --cache . --max-warnings 0",
     "eslint:fix": "pnpm run eslint:check --fix",
     "prepare": "husky",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
@@ -35,27 +35,27 @@
     "eslint-config-next": "^15.1.7",
     "eslint-plugin-check-file": "^3.0.0",
     "eslint-plugin-cypress": "^4.1.0",
-    "eslint-plugin-deprecation": "^3.0.0",
-    "eslint-plugin-functional": "^6.6.3",
+    "eslint-plugin-functional": "^8.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-jest-formatting": "^3.1.0",
-    "eslint-plugin-lodash": "^7.4.0",
+    "eslint-plugin-lodash": "^8.0.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-unicorn": "^56.0.1",
+    "globals": "^15.15.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@api3/commons": "0.13.4",
     "@types/lodash": "^4.17.15",
-    "eslint": "^8.57.1",
+    "eslint": "^9.20.1",
     "husky": "^9.1.7",
     "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "eslint": "^8.57.1"
+    "eslint": "^9.20.1"
   }
 }

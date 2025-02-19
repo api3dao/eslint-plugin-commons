@@ -19,7 +19,7 @@ module.exports = {
     'plugin:promise/recommended',
     'plugin:lodash/recommended',
   ],
-  plugins: ['@shopify', '@typescript-eslint', 'check-file', 'deprecation', 'functional', 'import', 'lodash', 'unicorn'],
+  plugins: ['@shopify', '@typescript-eslint', 'check-file', 'functional', 'import', 'lodash', 'unicorn'],
   rules: {
     /* Rule definitions and overrides for standard ESLint rules */
     camelcase: 'error',
@@ -148,6 +148,7 @@ module.exports = {
         ignoreArrowShorthand: true, // See: https://typescript-eslint.io/rules/no-confusing-void-expression/#ignorearrowshorthand.
       },
     ],
+    '@typescript-eslint/no-deprecated': 'error',
     '@typescript-eslint/no-dynamic-delete': 'off',
     '@typescript-eslint/no-empty-function': 'off', // Too restrictive, often false yields to more verbose code.
     '@typescript-eslint/no-explicit-any': 'off', // Using "any" is sometimes necessary.
@@ -203,11 +204,6 @@ module.exports = {
     'lodash/prefer-immutable-method': 'off',
     'lodash/prefer-lodash-method': 'off', // Disagree with this rule. Using the native method is often simpler.
     'lodash/prop-shorthand': 'off',
-
-    /* Rule overrides for other plugins and rules */
-    // This rule unfortunately does not detect deprecated properties. See:
-    // https://github.com/gund/eslint-plugin-deprecation/issues/13/
-    'deprecation/deprecation': 'error',
 
     /* Select rules from Shopify */
     '@shopify/prefer-early-return': 'error',
