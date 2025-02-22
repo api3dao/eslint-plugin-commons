@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "checkJs": true,
+    "outDir": "./dist/esm",
+    "declaration": false
+  },
+  "include": ["src/**/*", "*.d.ts", "*.js"],
+  "exclude": ["node_modules", "dist/", "**/*config.*", "eslint.config.mjs"]
+}

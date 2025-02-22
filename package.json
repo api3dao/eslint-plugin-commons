@@ -15,30 +15,41 @@
     "type": "git",
     "url": "https://github.com/api3dao/eslint-plugin-commons"
   },
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
   "files": [
-    "index.js",
-    "src/"
+    "dist/"
   ],
   "scripts": {
-    "eslint:check": "eslint --report-unused-disable-directives --cache . --max-warnings 0",
+    "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc --outDir dist/esm",
+    "build:cjs": "tsc --outDir dist/cjs --project tsconfig.cjs.json && node scripts/rename-cjs-files.js",
+    "eslint:check": "eslint --report-unused-disable-directives . --max-warnings 0",
     "eslint:fix": "pnpm run eslint:check --fix",
-    "prepare": "husky",
+    "prepare": "husky && pnpm run build",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:fix": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "release:tag": "node scripts/tag-and-release.js"
   },
   "dependencies": {
+    "@eslint/compat": "^1.2.6",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.21.0",
     "@shopify/eslint-plugin": "^47.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.24.0",
-    "eslint-config-next": "^15.1.7",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
     "eslint-plugin-check-file": "^3.0.0",
     "eslint-plugin-cypress": "^4.1.0",
     "eslint-plugin-functional": "^8.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-lodash": "^8.0.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-promise": "^7.2.1",
@@ -51,9 +62,12 @@
   "devDependencies": {
     "@api3/commons": "0.13.4",
     "@types/lodash": "^4.17.15",
+    "@types/node": "^22.13.4",
     "eslint": "^9.20.1",
     "husky": "^9.1.7",
-    "prettier": "^3.5.0"
+    "prettier": "^3.5.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "eslint": "^9.20.1"

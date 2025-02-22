@@ -1,21 +1,25 @@
 import globals from 'globals';
-import lodash from 'eslint-plugin-lodash';
+import universal from './dist/esm/src/universal.js';
 
-export default {
-  files: ['**/*.{js,ts,tsx,jsx}'],
-  ignores: ['**/node_modules/**', '**/dist/**', '**/build/**', '**/coverage/**'],
-  languageOptions: {
-    globals: {
-      ...globals.browser,
-      ...globals.node,
-      ...globals.es2015,
+export default [
+  ...universal,
+  {
+    files: ['**/*.{js,mjs,ts,tsx}'],
+    ignores: ['**/node_modules/**', '**/dist/**', '**/build/**'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2015,
+      },
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        project: './tsconfig.json',
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
-  plugins: {
-    lodash: lodash,
-  },
-  rules: {
-    // Because some of the modules might be used in browser, prefer import-scope method.
-    'lodash/import-scope': ['error', 'method'],
-  },
-};
+];

@@ -6,7 +6,6 @@ The modules consists of multiple ESLint configurations supporting wide variety o
 
 - `universal` - Linting rules for universal (both FE and BE) JS/TS code (with the emphasis on TS).
 - `react` - Linting rules for React code.
-- `next-js` - Linting rules for Next.js code.
 - `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
   extensions.
 

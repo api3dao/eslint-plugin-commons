@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 
 const { tagAndRelease } = require('@api3/commons');
 

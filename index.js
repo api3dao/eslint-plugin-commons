@@ -1,8 +1,11 @@
-module.exports = {
+import jest from './src/jest.js';
+import react from './src/react.js';
+import universal from './src/universal.js';
+
+export default {
   configs: {
-    universal: require('./src/universal'),
-    react: require('./src/react'),
-    nextJs: require('./src/next-js'),
-    jest: require('./src/jest'),
+    universal,
+    react,
+    jest,
   },
 };
