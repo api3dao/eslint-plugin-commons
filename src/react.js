@@ -1,9 +1,9 @@
 // eslint-disable-next-line
 const { merge } = require('lodash');
 
-const { universalRestrictedImportsConfig, universalImportOrderConfig } = require('./internal');
+const { compatConfig, universalRestrictedImportsConfig, universalImportOrderConfig } = require('./internal');
 
-module.exports = {
+module.exports = compatConfig({
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2022, // Enable parsing of modern ECMAScript features.
@@ -84,4 +84,4 @@ module.exports = {
     /* Overrides for "lodash" plugin */
     'lodash/import-scope': ['error', 'method'],
   },
-};
+});

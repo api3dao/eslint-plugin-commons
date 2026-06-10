@@ -12,22 +12,29 @@ The modules consists of multiple ESLint configurations supporting wide variety o
 
 ## Getting started
 
-1. Create an `.eslintrc.js` configuration file in the repo root.
-2. Extend the desired configuration(s).
-3. Specify the `parserOptions.project` option with the path to the `tsconfig.json` file(s).
-4. Install `eslint` (which is a peer dependency of this module) as dev dependencies.
+1. Create an `eslint.config.js` configuration file in the repo root.
+2. Import this plugin and spread the desired configuration(s).
+3. Specify the `languageOptions.parserOptions.project` option with the path to the `tsconfig.json` file(s).
+4. Install `eslint` (which is a peer dependency of this module) as a dev dependency.
 
 For example:
 
 ```js
-module.exports = {
-  extends: ['plugin:@api3/eslint-plugin-commons/universal', 'plugin:@api3/eslint-plugin-commons/jest'],
-  parserOptions: {
-    // We focus primarily on TS and for that we need to specify the TS configs which is project specific. The following
-    // is a common monorepo setup (root config and a config for each package).
-    project: ['./tsconfig.json', './packages/*/tsconfig.json'],
+const commons = require('@api3/eslint-plugin-commons');
+
+module.exports = [
+  ...commons.configs.universal,
+  ...commons.configs.jest,
+  {
+    languageOptions: {
+      parserOptions: {
+        // We focus primarily on TS and for that we need to specify the TS configs which is project specific. The following
+        // is a common monorepo setup (root config and a config for each package).
+        project: ['./tsconfig.json', './packages/*/tsconfig.json'],
+      },
+    },
   },
-};
+];
 ```
 
 If you are using TS, it's possible that ESLint will complain about `.js` files not being present in the project. This
@@ -39,7 +46,7 @@ We recommend using the following linting commands inside `package.json` scripts:
 
 ```json
 {
-  "eslint:check": "eslint --report-unused-disable-directives --cache --ext js,ts,tsx,jsx . --max-warnings 0",
+  "eslint:check": "eslint --report-unused-disable-directives --cache . --max-warnings 0",
   "eslint:fix": "pnpm run eslint:check --fix"
 }
 ```
@@ -62,17 +69,21 @@ choose the one you want.
 
 ### Overriding rules
 
-To override a rule, you can use the `rules` section key in your `.eslintrc.js` file. For example:
+To override a rule, add a config object with a `rules` key after the shared configs in your `eslint.config.js` file. For
+example:
 
 ```js
-{
-  rules: {
-    'check-file/folder-naming-convention': 'off', // Turns of the kebab-case convention for folder names.
-    'unicorn/filename-case': 'off' // Turns of the kebab-case convention for filenames.
-    'import/no-default-export': 'off', // Turns off the rule that disallows default exports.
-    'import/prefer-default-export': 'error' // Turns on the rule that prefers default exports.
-  }
-}
+module.exports = [
+  ...commons.configs.universal,
+  {
+    rules: {
+      'check-file/folder-naming-convention': 'off', // Turns of the kebab-case convention for folder names.
+      'unicorn/filename-case': 'off', // Turns of the kebab-case convention for filenames.
+      'import/no-default-export': 'off', // Turns off the rule that disallows default exports.
+      'import/prefer-default-export': 'error', // Turns on the rule that prefers default exports.
+    },
+  },
+];
 ```
 
 ## For developers

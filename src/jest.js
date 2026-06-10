@@ -1,4 +1,15 @@
-module.exports = {
+const { compatConfig } = require('./internal');
+
+const testFiles = [
+  '**/*.test.ts',
+  '**/*.test.tsx',
+  '**/*.feature.ts',
+  '**/*.feature.tsx',
+  '**/*.test.js',
+  '**/*.test.jsx',
+];
+
+module.exports = compatConfig({
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2022, // Enable parsing modern ECMAScript features.
@@ -11,7 +22,7 @@ module.exports = {
   // Configuration for specific files is done under 'overrides'.
   overrides: [
     {
-      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.feature.ts', '**/*.feature.tsx', '**/*.test.js', '**/*.test.jsx'],
+      files: testFiles,
       env: {
         jest: true,
       },
@@ -19,7 +30,6 @@ module.exports = {
       extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended'],
       rules: {
         'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
-        'jest/no-hooks': 'off', // Would be time consuming to implement in existing repos.
         'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
         'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
         'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
@@ -39,4 +49,4 @@ module.exports = {
       },
     },
   ],
-};
+});
