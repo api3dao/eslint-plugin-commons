@@ -1,7 +1,9 @@
 const path = require('node:path');
 
+const { fixupPluginRules } = require('@eslint/compat');
 const { FlatCompat } = require('@eslint/eslintrc');
 const js = require('@eslint/js');
+const importX = require('eslint-plugin-import-x');
 
 const compat = new FlatCompat({
   baseDirectory: path.join(__dirname, '..'),
@@ -12,6 +14,8 @@ const unwrapDefaultExport = (module) => (module.rules ? module : module.default)
 
 const pluginOverrides = {
   functional: unwrapDefaultExport(require('eslint-plugin-functional')),
+  react: fixupPluginRules(require('eslint-plugin-react')),
+  unicorn: require('eslint-plugin-unicorn').default,
 };
 
 const defaultFiles = ['**/*.{cjs,js,jsx,mjs,ts,tsx}'];
@@ -21,6 +25,9 @@ const compatConfig = (config) =>
     {
       linterOptions: {
         reportUnusedDisableDirectives: 'off',
+      },
+      plugins: {
+        import: importX,
       },
     },
     ...compat.config(config),

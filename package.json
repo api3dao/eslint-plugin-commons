@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=18.18.0"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "packageManager": "pnpm@9.15.2",
   "sideEffects": false,
@@ -29,34 +29,35 @@
     "release:tag": "node scripts/tag-and-release.js"
   },
   "dependencies": {
+    "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.0.0",
+    "@eslint/js": "^10.0.0",
     "@next/eslint-plugin-next": "^15.1.7",
     "@shopify/eslint-plugin": "^50.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.24.0",
-    "eslint-plugin-check-file": "^3.0.0",
-    "eslint-plugin-cypress": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/parser": "^8.61.0",
+    "eslint-plugin-check-file": "^3.3.1",
+    "eslint-plugin-cypress": "^6.4.1",
     "eslint-plugin-functional": "^10.0.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-jest": "^29.15.2",
     "eslint-plugin-jest-formatting": "^3.1.0",
-    "eslint-plugin-lodash": "^7.4.0",
-    "eslint-plugin-no-only-tests": "^3.3.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-unicorn": "^56.0.1",
+    "eslint-plugin-lodash": "^8.0.0",
+    "eslint-plugin-no-only-tests": "^3.4.0",
+    "eslint-plugin-promise": "^7.3.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-unicorn": "^65.0.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@api3/commons": "0.13.4",
     "@types/lodash": "^4.17.15",
-    "eslint": "^9.0.0",
+    "eslint": "^10.0.0",
     "husky": "^9.1.7",
     "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "eslint": "^9.0.0"
+    "eslint": "^10.0.0"
   }
 }

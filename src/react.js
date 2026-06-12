@@ -22,9 +22,9 @@ module.exports = compatConfig({
     browser: true,
   },
   extends: ['plugin:react/all', 'plugin:react-hooks/recommended'],
-  plugins: ['react', '@typescript-eslint', 'import', 'lodash'],
+  plugins: ['react', '@typescript-eslint', 'import-x', 'lodash'],
   rules: {
-    'import/order': [
+    'import-x/order': [
       'error',
       merge({}, universalImportOrderConfig, {
         // Prioritize react imports.

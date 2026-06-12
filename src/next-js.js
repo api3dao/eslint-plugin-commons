@@ -35,8 +35,8 @@ module.exports = [
   {
     files: ['pages/**/*'],
     rules: {
-      'import/no-default-export': 'off',
-      'import/prefer-default-export': 'error', // Next.js expects default exports in the pages directory.
+      'import-x/no-default-export': 'off',
+      'import-x/prefer-default-export': 'error', // Next.js expects default exports in the pages directory.
     },
   },
 ];
