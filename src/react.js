@@ -82,8 +82,8 @@ module.exports = scopeToDefaultFiles([
       'react/self-closing-comp': ['error', { component: true, html: true }],
       'react/void-dom-elements-no-children': 'error',
 
-      /* Overrides for "@typescript-eslint" plugin */
-      '@typescript-eslint/no-restricted-imports': [
+      /* Overrides for standard ESLint rules */
+      'no-restricted-imports': [
         'error',
         merge({}, universalRestrictedImportsConfig, {
           paths: [

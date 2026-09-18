@@ -56,6 +56,7 @@ module.exports = scopeToDefaultFiles([
       'no-inline-comments': 'off',
       'no-lonely-if': 'error',
       'no-nested-ternary': 'error',
+      'no-restricted-imports': ['error', universalRestrictedImportsConfig], // The "@typescript-eslint" version is deprecated, the core rule now covers type imports too.
       'no-return-await': 'off', // Deprecated and no longer recommended.
       'no-shadow': 'off', // Superceded by @typescript-eslint/no-shadow.
       'no-unexpected-multiline': 'off', // Conflicts with prettier.
@@ -178,7 +179,6 @@ module.exports = scopeToDefaultFiles([
       ],
       '@typescript-eslint/no-non-null-assertion': 'off', // Too restrictive. The inference is often not powerful enough or there is not enough context.
       '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
-      '@typescript-eslint/no-restricted-imports': ['error', universalRestrictedImportsConfig],
       '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
       '@typescript-eslint/no-unnecessary-condition': 'off', // Suggests removing useful conditionals for index signatures and arrays. Would require enabling additional strict checks in TS, which is hard to ask.
       '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
