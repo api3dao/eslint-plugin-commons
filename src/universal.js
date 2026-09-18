@@ -56,20 +56,11 @@ module.exports = scopeToDefaultFiles([
       'no-inline-comments': 'off',
       'no-lonely-if': 'error',
       'no-nested-ternary': 'error',
-      'no-return-await': 'off', // Superceded by @typescript-eslint/return-await.
+      'no-return-await': 'off', // Deprecated and no longer recommended.
       'no-shadow': 'off', // Superceded by @typescript-eslint/no-shadow.
       'no-unexpected-multiline': 'off', // Conflicts with prettier.
       'object-shorthand': 'error',
-      'prefer-destructuring': [
-        'error',
-        {
-          array: false, // For arrays it is often confusing to use destructuring.
-          object: true,
-        },
-        {
-          enforceForRenamedProperties: false,
-        },
-      ],
+      'prefer-destructuring': 'off', // Superceded by @typescript-eslint/prefer-destructuring.
       'prefer-exponentiation-operator': 'error',
       'prefer-named-capture-group': 'off', // Forces you to add a group name even if it is useless.
       'prefer-object-spread': 'error',
@@ -205,6 +196,18 @@ module.exports = scopeToDefaultFiles([
         },
       ],
       '@typescript-eslint/no-use-before-define': 'off', // Too restrictive, does not have a fixer and is not important.
+      // The base rule also flags declarations that carry an explicit type annotation, which cannot be rewritten as a
+      // destructuring without making them worse. This version knows about the annotation and leaves them alone.
+      '@typescript-eslint/prefer-destructuring': [
+        'error',
+        {
+          array: false, // For arrays it is often confusing to use destructuring.
+          object: true,
+        },
+        {
+          enforceForRenamedProperties: false,
+        },
+      ],
       '@typescript-eslint/prefer-nullish-coalescing': [
         'error',
         {
