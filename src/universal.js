@@ -46,11 +46,10 @@ module.exports = scopeToDefaultFiles([
     plugins: { 'check-file': checkFile, functional },
     rules: {
       /* Rule definitions and overrides for standard ESLint rules */
-      camelcase: 'error',
+      camelcase: ['error', { allow: ['^.+__factory$'] }], // Typechain generates "<Contract>__factory" bindings that we do not control.
       curly: ['error', 'multi-line', 'consistent'],
       eqeqeq: 'error',
       'no-await-in-loop': 'off', // Too restrictive, often false yields to more verbose code.
-      'no-console': ['error', { allow: ['info', 'groupCollapsed', 'groupEnd'] }],
       'no-constant-condition': 'off', // Writing a "while(true)"" loop is often the most readable way to express the intent.
       'no-fallthrough': 'off', // Does not work well with typescript exhaustive enums.
       'no-inline-comments': 'off',
@@ -180,7 +179,7 @@ module.exports = scopeToDefaultFiles([
       '@typescript-eslint/no-non-null-assertion': 'off', // Too restrictive. The inference is often not powerful enough or there is not enough context.
       '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
       '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
-      '@typescript-eslint/no-unnecessary-condition': 'off', // Suggests removing useful conditionals for index signatures and arrays. Would require enabling additional strict checks in TS, which is hard to ask.
+      '@typescript-eslint/no-unnecessary-condition': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful conditionals.
       '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
       '@typescript-eslint/no-unsafe-assignment': 'off', // Too restrictive, often false yields to more verbose code.
       '@typescript-eslint/no-unsafe-call': 'off', // Too restrictive, often false yields to more verbose code.
@@ -220,14 +219,15 @@ module.exports = scopeToDefaultFiles([
       '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
 
       /* Rule overrides for "functional" plugin */
-      'functional/no-classes': 'error', // Functions are all we need.
       'functional/no-try-statements': 'error', // Use go utils instead.
 
       /* Overrides for "lodash" plugin */
       'lodash/import-scope': ['error', 'member'], // We prefer member imports in node.js code. This is not recommended for FE projects, because lodash can't be tree shaken (written in CJS not ESM). This rule should be overridden for FE projects (and we do so in React ruleset).
       'lodash/path-style': 'off', // Can potentially trigger TS errors. Both variants have use cases when they are more readable.
+      'lodash/prefer-constant': 'off', // Reaching for "_.constant" is less readable than an arrow returning the value, and it forces a lodash import where none is needed.
       'lodash/prefer-immutable-method': 'off',
       'lodash/prefer-lodash-method': 'off', // Disagree with this rule. Using the native method is often simpler.
+      'lodash/prefer-lodash-typecheck': 'off',
       'lodash/prop-shorthand': 'off',
     },
   },

@@ -25,6 +25,7 @@ module.exports = [
       ...jest.configs['flat/all'].rules,
 
       'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
+      'jest/no-unnecessary-assertion': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful assertions.
       'jest/no-hooks': 'off', // Would be time consuming to implement in existing repos.
       'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
       'jest/prefer-ending-with-an-expect': 'off', // It flags tests ending in a loop.

@@ -34,8 +34,8 @@ const checks = [
     name: 'universal applies to TypeScript sources',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',
-    code: 'export default class Thing {}\n',
-    reports: ['import-x/no-default-export', 'functional/no-classes'],
+    code: 'export default () => {\n  try {\n    return 1;\n  } catch {\n    return 2;\n  }\n};\n',
+    reports: ['import-x/no-default-export', 'functional/no-try-statements'],
   },
   {
     name: 'universal replaces the rules of the dropped plugins',
