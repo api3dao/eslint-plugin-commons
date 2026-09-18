@@ -194,7 +194,15 @@ module.exports = scopeToDefaultFiles([
       '@typescript-eslint/no-unsafe-call': 'off', // Too restrictive, often false yields to more verbose code.
       '@typescript-eslint/no-unsafe-member-access': 'off', // Too restrictive, often false yields to more verbose code.
       '@typescript-eslint/no-unsafe-return': 'off', // Too restrictive, often false yields to more verbose code.
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', vars: 'all' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          vars: 'all',
+          ignoreRestSiblings: true, // Allow dropping a property by destructuring the rest of the object.
+        },
+      ],
       '@typescript-eslint/no-use-before-define': 'off', // Too restrictive, does not have a fixer and is not important.
       '@typescript-eslint/prefer-nullish-coalescing': [
         'error',
