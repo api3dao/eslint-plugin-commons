@@ -5,8 +5,9 @@
 The modules consists of multiple ESLint configurations supporting wide variety of targets:
 
 - `universal` - Linting rules for universal (both FE and BE) JS/TS code (with the emphasis on TS).
-- `react` - Linting rules for React code.
-- `nextJs` - Linting rules for Next.js code.
+- `react` - Linting rules for React code, including JSX accessibility rules.
+- `nextJs` - Next.js specific rules only. It carries no React or accessibility rules of its own, so spread it alongside
+  `react`.
 - `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
   extensions.
 

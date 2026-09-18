@@ -1,5 +1,6 @@
 const { fixupPluginRules } = require('@eslint/compat');
 const tsParser = require('@typescript-eslint/parser');
+const a11y = require('eslint-plugin-jsx-a11y');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const merge = require('lodash/merge');
@@ -18,6 +19,7 @@ const patchedReact = fixupPluginRules(react);
 module.exports = scopeToDefaultFiles([
   { ...react.configs.flat.all, plugins: { react: patchedReact } },
   reactHooks.configs.flat.recommended,
+  a11y.flatConfigs.recommended, // Accessibility rules for JSX.
   {
     languageOptions: {
       parser: tsParser,

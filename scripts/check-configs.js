@@ -95,6 +95,14 @@ const checks = [
     enabled: ['react-hooks/rules-of-hooks', 'react-hooks/purity'],
   },
   {
+    name: 'react applies the accessibility rules',
+    configs: [...commons.configs.universal, ...commons.configs.react],
+    filePath: 'src/widget.tsx',
+    code: 'export const Widget = () => <img src="/a.png" />;\n',
+    reports: ['jsx-a11y/alt-text'],
+    enabled: ['jsx-a11y/aria-role', 'jsx-a11y/anchor-is-valid'],
+  },
+  {
     name: 'nextJs applies its plugin rules',
     configs: [...commons.configs.universal, ...commons.configs.react, ...commons.configs.nextJs],
     filePath: 'pages/index.tsx',
