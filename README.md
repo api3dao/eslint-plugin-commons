@@ -125,13 +125,13 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
    v10, so it was replaced by the maintained `eslint-plugin-import-x` fork. The rules and their options are unchanged.
 5. Rename `deprecation/deprecation` comments to `@typescript-eslint/no-deprecated`. The `eslint-plugin-deprecation`
    plugin only supports ESLint v8 and was removed.
-6. Rename `@shopify/prefer-module-scope-constants` comments to `@typescript-eslint/naming-convention`, and delete
-   `@shopify/prefer-early-return` ones. The `@shopify/eslint-plugin` dependency was dropped; the pinned
-   `eslint-plugin-unicorn` has no equivalent of `prefer-early-return`, so that rule is not enforced for now. A directive
-   naming a rule that does not exist is itself reported as an error, so stale ones cannot be left behind.
+6. Rename `@shopify/prefer-early-return` comments to `unicorn/prefer-early-return` and
+   `@shopify/prefer-module-scope-constants` ones to `@typescript-eslint/naming-convention`. The `@shopify/eslint-plugin`
+   dependency was dropped and `prefer-early-return` now comes from `eslint-plugin-unicorn`.
 7. Scope any rule overrides of your own with a `files` key. v4 lints `package.json` as well as source, so a config
    object with `rules` but no `files` now applies to `package.json` too and will fail with "could not find plugin".
-8. Run `eslint --fix` and then clean up whatever is left.
+8. Run `eslint --fix` and then clean up whatever is left. Expect some stale `eslint-disable` directives to be reported,
+   because `eslint-plugin-unicorn` renamed a number of rules.
 
 ## For developers
 

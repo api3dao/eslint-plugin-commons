@@ -6,6 +6,7 @@ function main() {
   return tagAndRelease('eslint-plugin-commons', path.join(__dirname, '../package.json'));
 }
 
+/* eslint-disable unicorn/prefer-await */
 main()
   .then(() => process.exit(0))
   .catch((error) => {

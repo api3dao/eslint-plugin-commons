@@ -112,7 +112,9 @@ module.exports = [
           'error',
           {
             case: 'kebabCase',
-            ignore: [],
+            // From unicorn v75 the rule checks directory names too, which flags the "__mocks__" and
+            // "__snapshots__" directories that jest requires to be named exactly that.
+            ignore: [/^__\w+__$/u],
           },
         ],
 
@@ -121,15 +123,17 @@ module.exports = [
         'unicorn/import-style': [
           'error',
           {
+            // unicorn strips the "node:" prefix before looking the module up, so the keys are bare here.
             styles: {
-              'node:path': { named: true }, // Allows import { join } from 'node:path';
-              'node:util': { default: true }, // Allows import util from 'node:util';
+              path: { named: true }, // Allows import { join } from 'node:path';
+              util: { default: true }, // Allows import util from 'node:util';
             },
           },
         ],
+        'unicorn/name-replacements': 'off', // Successor to "prevent-abbreviations". Reports many false positives (e.g. "acc" or "env") and leads to more verbose code.
         'unicorn/no-abusive-eslint-disable': 'off', // Already covered by different ruleset.
-        'unicorn/no-array-for-each': 'off', // We use .forEach extensively across the api3dao org and even though this can be solved with --fix and there are benefits, it will generate a lot of friction.
         'unicorn/no-array-reduce': 'off', // We are OK with using reduce occasionally, but I agree with the author that the code using reduce can easily get complex.
+        'unicorn/no-for-each': 'off', // We use .forEach extensively across the api3dao org.
         'unicorn/no-for-loop': 'off', // Simple for loops are sometimes fine.
         'unicorn/no-nested-ternary': 'off', // This rule is smarter than the standard ESLint rule, but conflicts with prettier so it needs to be turned off. Nested ternaries are very unreadable so it's OK if all of them are flagged.
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
@@ -139,7 +143,7 @@ module.exports = [
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
         'unicorn/prefer-string-raw': 'off', // We commonly escape \ in strings.
         'unicorn/prefer-top-level-await': 'off',
-        'unicorn/prevent-abbreviations': 'off', // This rule reports many false positives and leads to more verbose code.
+        'unicorn/single-line-block-comment-style': 'off', // Conflicts with the single line "/* ... */" section headers and eslint-disable comments we use throughout our configs.
 
         /* Rule overrides for "import-x" plugin */
         'import-x/namespace': 'off', // Analyses a module's literal exports, so it cannot see the type augmentation that plugins rely on and reports valid members such as "hre.ethers". TypeScript checks the same thing and gets it right.
