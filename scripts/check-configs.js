@@ -41,7 +41,7 @@ const checks = [
     name: 'universal replaces the rules of the dropped plugins',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',
-    code: 'export const run = (a: number) => {\n  if (a > 0) {\n    console.info(a);\n    console.info(a);\n  }\n};\n',
+    code: 'export const run = (a: number) => {\n  if (a > 0) {\n    console.info(a);\n    console.info(a);\n    console.info(a);\n  }\n};\n',
     reports: ['unicorn/prefer-early-return'],
     enabledInBaseConfig: ['@typescript-eslint/naming-convention', '@typescript-eslint/no-deprecated'],
   },
@@ -236,7 +236,6 @@ const main = async () => {
   if (failed.length > 0) process.exitCode = 1;
 };
 
-/* eslint-disable unicorn/prefer-await */
 main().catch((error) => {
   console.info(error);
   process.exitCode = 1;

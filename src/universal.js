@@ -113,6 +113,7 @@ module.exports = [
         ],
 
         /* Rule overrides for "unicorn" plugin */
+        'unicorn/consistent-boolean-name': 'off', // Flags every boolean returning function not prefixed with is/has/can/should, no option to exempt them - arrow functions count as variables, so "checkFunctions" does not apply.
         'unicorn/consistent-function-scoping': 'off', // Disabling due to the rule's constraints conflicting with established patterns, especially in test suites where local helper or mocking functions are prevalent and do not necessitate exports.
         'unicorn/empty-brace-spaces': 'off', // Conflicts with Prettier.
         'unicorn/import-style': [
@@ -125,20 +126,38 @@ module.exports = [
             },
           },
         ],
+        'unicorn/max-nested-calls': 'off', // Over half the reports are zod schemas and most of the rest ethers encoding or jest matchers.
         'unicorn/name-replacements': 'off', // Successor to "prevent-abbreviations". Reports many false positives (e.g. "acc" or "env") and leads to more verbose code.
         'unicorn/no-abusive-eslint-disable': 'off', // Already covered by different ruleset.
         'unicorn/no-array-reduce': 'off', // We are OK with using reduce occasionally, but I agree with the author that the code using reduce can easily get complex.
+        'unicorn/no-break-in-nested-loop': 'off', // Mostly the mandatory "break" of a switch case and guard clause "continue"s, and the suggested fix is to extract the enclosing block into a function.
+        'unicorn/no-computed-property-existence-check': 'off', // The suggested "Object.hasOwn" is often less readable than the existence check it replaces.
         'unicorn/no-for-each': 'off', // We use .forEach extensively across the api3dao org.
         'unicorn/no-for-loop': 'off', // Simple for loops are sometimes fine.
         'unicorn/no-nested-ternary': 'off', // This rule is smarter than the standard ESLint rule, but conflicts with prettier so it needs to be turned off. Nested ternaries are very unreadable so it's OK if all of them are flagged.
+        'unicorn/no-non-function-verb-prefix': 'off', // Causes too many false positives across repos.
+        'unicorn/no-nonstandard-builtin-properties': 'off', // TypeScript already reports misspelled built-in properties, and the rule also flags deliberate extensions such as the "BigInt.prototype.toJSON" patch.
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
         'unicorn/no-object-as-default-parameter': 'off', // Too restrictive. TypeScript can ensure that the default value matches the type.
         'unicorn/no-process-exit': 'off',
+        'unicorn/no-top-level-assignment-in-function': 'off', // Every hit across the org is a module scope store or lazy singleton with an exported setter, and the rule has no options to allow that.
+        'unicorn/no-unreadable-for-of-expression': 'off', // Too strict, it flags readable idioms like "list ?? []" and "new Set(list)".
+        'unicorn/no-unreadable-object-destructuring': 'off', // Alternatives are often more verbose and less readable.
+        'unicorn/no-unsafe-property-key': 'off', // False positives on template literal types like viem's "Hex". The upstream guard for them is wired to wrong TypeFlags constants, still broken in v76.
         'unicorn/no-useless-undefined': ['error', { checkArguments: false }], // We need to disable "checkArguments", because if a function expects a value of type "T | undefined" the undefined value needs to be passed explicitly.
         'unicorn/number-literal-case': ['error', { hexadecimalValue: 'lowercase' }], // Matches Prettier, which prints hex digits lowercase; the rule defaults to uppercase.
+        'unicorn/prefer-await': 'off', // Conflicts with "functional/no-try-statements" - it rejects ".catch()".
+        'unicorn/prefer-bigint-literals': 'off', // Flags dApp ids defined from strings like BigInt('123...').
+        'unicorn/prefer-continue': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
+        'unicorn/prefer-early-return': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
+        'unicorn/prefer-number-coercion': 'off', // "Number()" turns an empty string into 0, which may not be desirable.
+        'unicorn/prefer-simple-sort-comparator': 'off', // Its suggested "a - b" comparator does not work for bigints.
+        'unicorn/prefer-split-limit': 'off', // The limit it adds has to be kept in sync with the index read afterwards, and nothing reports a limit that became too small.
         'unicorn/prefer-string-raw': 'off', // We commonly escape \ in strings.
+        'unicorn/prefer-ternary': 'off', // Complex ternaries are often less readable.
         'unicorn/prefer-top-level-await': 'off',
+        'unicorn/require-array-sort-compare': 'off', // Superceded by @typescript-eslint/require-array-sort-compare.
         'unicorn/single-line-block-comment-style': 'off', // Conflicts with the single line "/* ... */" section headers and eslint-disable comments.
 
         /* Rule overrides for "import-x" plugin */
@@ -236,6 +255,7 @@ module.exports = [
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+        '@typescript-eslint/require-array-sort-compare': 'error', // The unicorn version has no type information, so it also flags sorting a string array, where the default order is already correct.
         '@typescript-eslint/require-await': 'off', // Removing "async" fails type checking wherever the function must return a Promise (overrides, typed callbacks, mocks), and "no-floating-promises" already catches most forgotten awaits.
         '@typescript-eslint/restrict-template-expressions': 'off', // Arrays, URLSearchParams, "never" in exhaustiveness errors etc. are often interpolated on purpose, and "no-base-to-string" already reports values that would print as "[object Object]".
         '@typescript-eslint/strict-boolean-expressions': 'off', // While the rule is reasonable, it is often convenient and intended to just check whether the value is not null or undefined. Enabling this rule would make the code more verbose. See: https://typescript-eslint.io/rules/strict-boolean-expressions/
