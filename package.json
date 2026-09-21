@@ -1,25 +1,15 @@
 {
   "name": "@api3/eslint-plugin-commons",
   "version": "3.1.1",
-  "keywords": [
-    "eslint",
-    "eslint-plugin"
-  ],
+  "description": "ESLint configurations used across API3 projects.",
   "license": "MIT",
+  "repository": "github:api3dao/eslint-plugin-commons",
+  "exports": "./index.js",
+  "sideEffects": false,
   "engines": {
     "node": "^22.13.0 || >=24"
   },
   "packageManager": "pnpm@9.15.2",
-  "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/api3dao/eslint-plugin-commons"
-  },
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "src/"
-  ],
   "scripts": {
     "eslint:check": "eslint --report-unused-disable-directives --cache . --max-warnings 0",
     "eslint:fix": "pnpm run eslint:check --fix",
@@ -29,6 +19,14 @@
     "test": "node scripts/check-configs.js",
     "release:tag": "node scripts/tag-and-release.js"
   },
+  "files": [
+    "index.js",
+    "src/"
+  ],
+  "keywords": [
+    "eslint",
+    "eslint-plugin"
+  ],
   "dependencies": {
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
@@ -36,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-package-json": "^1.0.0",
     "eslint-plugin-check-file": "^3.3.2",
     "eslint-plugin-functional": "^10.0.1",
     "eslint-plugin-import-x": "^4.17.1",
@@ -50,7 +49,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@api3/commons": "0.13.4",
+    "@api3/commons": "^0.13.4",
     "@types/lodash": "^4.17.15",
     "eslint": "^10.10.0",
     "husky": "^9.1.7",

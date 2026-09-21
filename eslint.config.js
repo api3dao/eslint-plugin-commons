@@ -23,6 +23,7 @@ module.exports = [
   // This repo is plain CommonJS without a tsconfig, so the type aware rules have nothing to run against.
   tsPlugin.configs['flat/disable-type-checked'],
   {
+    files: ['**/*.js'],
     rules: {
       // Because some of the modules might be used in browser, prefer import-scope method.
       'lodash/import-scope': ['error', 'method'],
