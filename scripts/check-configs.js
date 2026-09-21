@@ -164,7 +164,6 @@ const main = async () => {
   if (failed.length > 0) process.exitCode = 1;
 };
 
-/* eslint-disable unicorn/prefer-await */
 main().catch((error) => {
   console.info(error);
   process.exitCode = 1;
