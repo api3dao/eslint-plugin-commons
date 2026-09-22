@@ -41,6 +41,9 @@ module.exports = [
 ];
 ```
 
+`configs.jest` and `configs.vitest` both apply to the same test file names, so a repo spreads whichever matches its test
+runner, never both.
+
 The configurations are plain CommonJS, so they can also be imported from an ESM `eslint.config.js`:
 
 ```js

@@ -53,9 +53,24 @@ const moduleScopeConstantsNamingConvention = [
   },
 ];
 
+// These globs are shared by the Jest and Vitest configurations, which both scope their rules to test files.
+const testFiles = [
+  '**/*.test.ts',
+  '**/*.test.tsx',
+  '**/*.spec.ts',
+  '**/*.spec.tsx',
+  '**/*.feature.ts',
+  '**/*.feature.tsx',
+  '**/*.test.js',
+  '**/*.test.jsx',
+  '**/*.spec.js',
+  '**/*.spec.jsx',
+];
+
 module.exports = {
   moduleScopeConstantsNamingConvention,
   scopeToDefaultFiles,
+  testFiles,
   sharedPlugins,
   universalImportOrderConfig,
   universalRestrictedImportsConfig,

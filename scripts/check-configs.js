@@ -94,6 +94,21 @@ const checks = [
     notEnabled: ['jest/'],
   },
   {
+    name: 'vitest applies to test files',
+    configs: [...commons.configs.universal, ...commons.configs.vitest],
+    filePath: 'src/example.test.ts',
+    code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
+    reports: ['vitest/no-focused-tests'],
+    enabled: ['vitest/no-identical-title', 'vitest/padding-around-test-blocks'],
+  },
+  {
+    name: 'vitest does not leak into non test files',
+    configs: [...commons.configs.universal, ...commons.configs.vitest],
+    filePath: 'src/example.ts',
+    code: "export const a = it.only('b');\n",
+    notEnabled: ['vitest/'],
+  },
+  {
     name: 'react applies to TSX files',
     configs: [...commons.configs.universal, ...commons.configs.react],
     filePath: 'src/widget.tsx',
