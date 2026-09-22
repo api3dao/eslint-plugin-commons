@@ -45,12 +45,10 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-unicorn": "^57.0.0",
-    "globals": "^17.12.0",
-    "lodash": "^4.17.21"
+    "globals": "^17.12.0"
   },
   "devDependencies": {
     "@api3/commons": "^0.13.4",
-    "@types/lodash": "^4.17.15",
     "eslint": "^10.10.0",
     "husky": "^9.1.7",
     "prettier": "^3.5.0"

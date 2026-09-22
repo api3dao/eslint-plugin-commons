@@ -3,7 +3,6 @@ const tsParser = require('@typescript-eslint/parser');
 const a11y = require('eslint-plugin-jsx-a11y');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
-const merge = require('lodash/merge');
 
 const {
   scopeToDefaultFiles,
@@ -41,7 +40,8 @@ module.exports = scopeToDefaultFiles([
     rules: {
       'import-x/order': [
         'error',
-        merge({}, universalImportOrderConfig, {
+        {
+          ...universalImportOrderConfig,
           // Prioritize react imports.
           pathGroups: [
             {
@@ -50,7 +50,7 @@ module.exports = scopeToDefaultFiles([
               position: 'before',
             },
           ],
-        }),
+        },
       ],
 
       /* Overrides for "react" plugin */
@@ -93,7 +93,8 @@ module.exports = scopeToDefaultFiles([
       /* Overrides for standard ESLint rules */
       'no-restricted-imports': [
         'error',
-        merge({}, universalRestrictedImportsConfig, {
+        {
+          ...universalRestrictedImportsConfig,
           paths: [
             {
               name: 'react',
@@ -102,7 +103,7 @@ module.exports = scopeToDefaultFiles([
                 'Starting from React version 17, there is no need to globally import React. Use named imports for specific React APIs.',
             },
           ],
-        }),
+        },
       ],
 
       /* Overrides for "lodash" plugin */
