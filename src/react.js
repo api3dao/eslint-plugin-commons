@@ -57,9 +57,14 @@ module.exports = scopeToDefaultFiles([
       'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'ignore' }],
       'react/forbid-component-props': ['error', { forbid: [] }],
       'react/forbid-dom-props': ['error', { forbid: [] }],
+      'react/jsx-closing-bracket-location': 'off', // Conflicts with prettier's "bracketSameLine" option.
+      'react/jsx-closing-tag-location': 'off', // Handled by prettier and "react/self-closing-comp".
       'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never', propElementValues: 'always' }],
       'react/jsx-curly-newline': 'off', // Conflicts with prettier.
+      'react/jsx-curly-spacing': 'off', // Handled by prettier.
+      'react/jsx-equals-spacing': 'off', // Handled by prettier.
       'react/jsx-filename-extension': 'off', // We use .tsx extension.
+      'react/jsx-first-prop-new-line': 'off', // Handled by prettier.
       'react/jsx-handler-names': 'off',
       'react/jsx-indent': 'off', // Conflicts with prettier.
       'react/jsx-indent-props': 'off', // Conflicts with prettier.
@@ -70,8 +75,11 @@ module.exports = scopeToDefaultFiles([
       'react/jsx-no-leaked-render': 'off',
       'react/jsx-no-literals': 'off',
       'react/jsx-one-expression-per-line': 'off', // Conflicts with prettier.
+      'react/jsx-props-no-multi-spaces': 'off', // Handled by prettier.
       'react/jsx-props-no-spreading': 'off',
       'react/jsx-sort-props': 'off',
+      'react/jsx-tag-spacing': 'off', // Handled by prettier.
+      'react/jsx-wrap-multilines': 'off', // Handled by prettier.
       'react/no-multi-comp': 'off',
       'react/no-unescaped-entities': 'off',
       'react/no-unused-prop-types': 'off',
