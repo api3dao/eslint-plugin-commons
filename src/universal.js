@@ -1,7 +1,6 @@
 const js = require('@eslint/js');
 const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
 const packageJson = require('eslint-package-json').default;
-const checkFile = require('eslint-plugin-check-file');
 const functional = require('eslint-plugin-functional').default;
 const importX = require('eslint-plugin-import-x');
 const promise = require('eslint-plugin-promise');
@@ -58,9 +57,9 @@ module.exports = [
         sourceType: 'module', // Allows for the use of imports.
         globals: { ...globals.node, ...globals.browser },
       },
-      // The "functional" and "check-file" plugins are registered without their shared configurations, because we only
-      // enable a handful of their rules.
-      plugins: { 'check-file': checkFile, functional },
+      // The "functional" plugin is registered without its shared configuration, because we only enable a handful
+      // of its rules.
+      plugins: { functional },
       rules: {
         /* Rule definitions and overrides for standard ESLint rules */
         camelcase: ['error', { allow: ['^.+__factory$'] }], // Typechain generates "<Contract>__factory" bindings that we do not control.
@@ -103,12 +102,6 @@ module.exports = [
         ],
 
         /* Rules to enforce kebab-case folder structure */
-        'check-file/folder-naming-convention': [
-          'error',
-          {
-            '**/': 'KEBAB_CASE',
-          },
-        ],
         'unicorn/filename-case': [
           'error',
           {
