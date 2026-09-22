@@ -1,42 +1,54 @@
-module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2022, // Enable parsing modern ECMAScript features.
-    sourceType: 'module', // Enable the use of ES6 import/export syntax.
-  },
-  env: {
-    node: true,
-    browser: true,
-  },
-  // Configuration for specific files is done under 'overrides'.
-  overrides: [
-    {
-      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.feature.ts', '**/*.feature.tsx', '**/*.test.js', '**/*.test.jsx'],
-      env: {
-        jest: true,
-      },
-      plugins: ['jest'],
-      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended'],
-      rules: {
-        'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
-        'jest/no-hooks': 'off', // Would be time consuming to implement in existing repos.
-        'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
-        'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
-        'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
-        'jest/prefer-todo': 'off',
-        'jest/require-top-level-describe': 'off', // Multiple top-level describe blocks or tests can be acceptable.
-        'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
-        'prefer-lowercase-title': 'off', // Sometimes we want to start the test with a capital letter and some words are all uppercase (e.g. AWS).,
-        // Padding rules have to be enabled individually if any are disabled
-        'jest/padding-around-all': 'off', // This meta rule needs to be off if any individual padding rules are off
-        'jest/padding-around-expect-groups': 'off', // Adds a lot of excess whitespace
-        'jest/padding-around-after-all-blocks': 'error',
-        'jest/padding-around-after-each-blocks': 'error',
-        'jest/padding-around-before-all-blocks': 'error',
-        'jest/padding-around-before-each-blocks': 'error',
-        'jest/padding-around-describe-blocks': 'error',
-        'jest/padding-around-test-blocks': 'error',
-      },
+const tsParser = require('@typescript-eslint/parser');
+const jest = require('eslint-plugin-jest');
+
+// These rules are only applied to test files, so that the rest of the repo is unaffected.
+const testFiles = [
+  '**/*.test.ts',
+  '**/*.test.tsx',
+  '**/*.spec.ts',
+  '**/*.spec.tsx',
+  '**/*.feature.ts',
+  '**/*.feature.tsx',
+  '**/*.test.js',
+  '**/*.test.jsx',
+  '**/*.spec.js',
+  '**/*.spec.jsx',
+];
+
+module.exports = [
+  {
+    files: testFiles,
+    plugins: jest.configs['flat/recommended'].plugins,
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 2022, // Enable parsing modern ECMAScript features.
+      sourceType: 'module', // Enable the use of ES6 import/export syntax.
+      globals: jest.environments.globals.globals,
     },
-  ],
-};
+    rules: {
+      ...jest.configs['flat/recommended'].rules,
+      ...jest.configs['flat/style'].rules,
+
+      // A mock's signature has to match the function it replaces, so TypeScript rejects the suggested edit.
+      '@typescript-eslint/require-await': 'off',
+
+      'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
+
+      // Autofixable mock and matcher rules from the "all" ruleset, which the presets leave out.
+      'jest/no-unneeded-async-expect-function': 'error',
+      'jest/prefer-mock-promise-shorthand': 'error',
+      'jest/prefer-mock-return-shorthand': 'error',
+      'jest/prefer-spy-on': 'error', // Assigning "jest.fn()" over a method leaks the mock into later tests.
+      'jest/prefer-to-have-been-called-times': 'error',
+      'jest/prefer-to-have-been-called': 'error',
+
+      // Padding rules, not part of the presets.
+      'jest/padding-around-after-all-blocks': 'error',
+      'jest/padding-around-after-each-blocks': 'error',
+      'jest/padding-around-before-all-blocks': 'error',
+      'jest/padding-around-before-each-blocks': 'error',
+      'jest/padding-around-describe-blocks': 'error',
+      'jest/padding-around-test-blocks': 'error',
+    },
+  },
+];
