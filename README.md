@@ -89,7 +89,6 @@ module.exports = [
   ...commons.configs.universal,
   {
     rules: {
-      'check-file/folder-naming-convention': 'off', // Turns of the kebab-case convention for folder names.
       'unicorn/filename-case': 'off', // Turns of the kebab-case convention for filenames.
       'import-x/no-default-export': 'off', // Turns off the rule that disallows default exports.
       'import-x/prefer-default-export': 'error', // Turns on the rule that prefers default exports.
