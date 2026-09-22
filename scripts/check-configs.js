@@ -42,9 +42,7 @@ const checks = [
     configs: commons.configs.universal,
     filePath: 'src/example.ts',
     code: 'export const run = (a: number) => {\n  if (a > 0) {\n    console.info(a);\n    console.info(a);\n  }\n};\n',
-    // "unicorn/prefer-early-return" replaces "@shopify/prefer-early-return" but only exists from unicorn v70,
-    // so it is not asserted while the plugin is pinned below that.
-    // The two below are type aware, so they are asserted against the exported config rather than the resolved one.
+    reports: ['unicorn/prefer-early-return'],
     enabledInBaseConfig: ['@typescript-eslint/naming-convention', '@typescript-eslint/no-deprecated'],
   },
   {

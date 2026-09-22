@@ -3,7 +3,6 @@ const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
 const packageJson = require('eslint-package-json').default;
-const checkFile = require('eslint-plugin-check-file');
 const functional = require('eslint-plugin-functional').default;
 const importX = require('eslint-plugin-import-x');
 const lodash = require('eslint-plugin-lodash');
@@ -57,9 +56,9 @@ module.exports = [
         sourceType: 'module', // Allows for the use of imports.
         globals: { ...globals.node, ...globals.browser },
       },
-      // The "functional" and "check-file" plugins are registered without their shared configurations, because we only
-      // enable a handful of their rules.
-      plugins: { 'check-file': checkFile, functional },
+      // The "functional" plugin is registered without its shared configuration, because we only enable a handful
+      // of its rules.
+      plugins: { functional },
       rules: {
         /* Rule definitions and overrides for standard ESLint rules */
         camelcase: ['error', { allow: ['^.+__factory$'] }], // Typechain generates "<Contract>__factory" bindings that we do not control.
@@ -102,44 +101,53 @@ module.exports = [
         ],
 
         /* Rules to enforce kebab-case folder structure */
-        'check-file/folder-naming-convention': [
-          'error',
-          {
-            '**/': 'KEBAB_CASE',
-          },
-        ],
         'unicorn/filename-case': [
           'error',
           {
             case: 'kebabCase',
-            ignore: [],
+            // From unicorn v75 the rule checks directory names too, which flags the "__mocks__" and
+            // "__snapshots__" directories that jest requires to be named exactly that.
+            ignore: [/^__\w+__$/u],
           },
         ],
 
         /* Rule overrides for "unicorn" plugin */
+        'unicorn/consistent-boolean-name': 'off', // Flags every boolean returning function not prefixed with is/has/can/should, no option to exempt them - arrow functions count as variables, so "checkFunctions" does not apply.
         'unicorn/consistent-function-scoping': 'off', // Disabling due to the rule's constraints conflicting with established patterns, especially in test suites where local helper or mocking functions are prevalent and do not necessitate exports.
         'unicorn/import-style': [
           'error',
           {
+            // unicorn strips the "node:" prefix before looking the module up, so the keys are bare here.
             styles: {
-              'node:path': { named: true }, // Allows import { join } from 'node:path';
-              'node:util': { default: true }, // Allows import util from 'node:util';
+              path: { named: true }, // Allows import { join } from 'node:path';
+              util: { default: true }, // Allows import util from 'node:util';
             },
           },
         ],
+        'unicorn/max-nested-calls': 'off', // Over half the reports are zod schemas and most of the rest ethers encoding or jest matchers.
+        'unicorn/name-replacements': 'off', // Successor to "prevent-abbreviations". Reports many false positives (e.g. "acc" or "env") and leads to more verbose code.
         'unicorn/no-abusive-eslint-disable': 'off', // Already covered by different ruleset.
-        'unicorn/no-array-for-each': 'off', // We use .forEach extensively across the api3dao org and even though this can be solved with --fix and there are benefits, it will generate a lot of friction.
         'unicorn/no-array-reduce': 'off', // We are OK with using reduce occasionally, but I agree with the author that the code using reduce can easily get complex.
+        'unicorn/no-break-in-nested-loop': 'off', // Mostly the mandatory "break" of a switch case and guard clause "continue"s, and the suggested fix is to extract the enclosing block into a function.
+        'unicorn/no-computed-property-existence-check': 'off', // The suggested "Object.hasOwn" is often less readable than the existence check it replaces.
+        'unicorn/no-for-each': 'off', // We use .forEach extensively across the api3dao org.
         'unicorn/no-for-loop': 'off', // Simple for loops are sometimes fine.
         'unicorn/no-nested-ternary': 'off', // This rule is smarter than the standard ESLint rule, but conflicts with prettier so it needs to be turned off. Nested ternaries are very unreadable so it's OK if all of them are flagged.
+        'unicorn/no-non-function-verb-prefix': 'off', // Causes too many false positives across repos.
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
         'unicorn/no-object-as-default-parameter': 'off', // Too restrictive. TypeScript can ensure that the default value matches the type.
         'unicorn/no-process-exit': 'off',
+        'unicorn/no-top-level-assignment-in-function': 'off', // Every hit across the org is a module scope store or lazy singleton with an exported setter, and the rule has no options to allow that.
+        'unicorn/no-unsafe-property-key': 'off', // False positives on template literal types like viem's "Hex". The upstream guard for them is wired to wrong TypeFlags constants, still broken in v76.
         'unicorn/no-useless-undefined': ['error', { checkArguments: false }], // We need to disable "checkArguments", because if a function expects a value of type "T | undefined" the undefined value needs to be passed explicitly.
+        'unicorn/prefer-await': 'off', // Conflicts with "functional/no-try-statements" - it rejects ".catch()".
+        'unicorn/prefer-bigint-literals': 'off', // Flags dApp ids defined from strings like BigInt('123...').
+        'unicorn/prefer-continue': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
         'unicorn/prefer-string-raw': 'off', // We commonly escape \ in strings.
         'unicorn/prefer-top-level-await': 'off',
-        'unicorn/prevent-abbreviations': 'off', // This rule reports many false positives and leads to more verbose code.
+        'unicorn/require-array-sort-compare': 'off', // Superceded by @typescript-eslint/require-array-sort-compare.
+        'unicorn/single-line-block-comment-style': 'off', // Conflicts with the single line "/* ... */" section headers and eslint-disable comments we use throughout our configs.
 
         /* Rule overrides for "import-x" plugin */
         'import-x/namespace': 'off', // Analyses a module's literal exports, so it cannot see the type augmentation that plugins rely on and reports valid members such as "hre.ethers". TypeScript checks the same thing and gets it right.
@@ -230,6 +238,7 @@ module.exports = [
           },
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
+        '@typescript-eslint/require-array-sort-compare': 'error', // The unicorn version has no type information, so it also flags sorting a string array, where the default order is already correct.
         '@typescript-eslint/strict-boolean-expressions': 'off', // While the rule is reasonable, it is often convenient and intended to just check whether the value is not null or undefined. Enabling this rule would make the code more verbose. See: https://typescript-eslint.io/rules/strict-boolean-expressions/
         '@typescript-eslint/unbound-method': 'off', // Reports issues for common patterns in tests (e.g. "expect(logger.warn)..."). Often the issue yields false positives.
         '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
