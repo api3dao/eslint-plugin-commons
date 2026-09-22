@@ -80,6 +80,13 @@ const checks = [
     enabled: ['jest/no-identical-title', 'jest/padding-around-test-blocks'],
   },
   {
+    name: 'jest applies to spec files',
+    configs: [...commons.configs.universal, ...commons.configs.jest],
+    filePath: 'src/example.spec.ts',
+    code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
+    reports: ['jest/no-focused-tests'],
+  },
+  {
     name: 'jest does not leak into non test files',
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.ts',

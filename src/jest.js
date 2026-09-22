@@ -5,16 +5,20 @@ const jest = require('eslint-plugin-jest');
 const testFiles = [
   '**/*.test.ts',
   '**/*.test.tsx',
+  '**/*.spec.ts',
+  '**/*.spec.tsx',
   '**/*.feature.ts',
   '**/*.feature.tsx',
   '**/*.test.js',
   '**/*.test.jsx',
+  '**/*.spec.js',
+  '**/*.spec.jsx',
 ];
 
 module.exports = [
   {
     files: testFiles,
-    plugins: jest.configs['flat/all'].plugins,
+    plugins: jest.configs['flat/recommended'].plugins,
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 2022, // Enable parsing modern ECMAScript features.
@@ -22,22 +26,23 @@ module.exports = [
       globals: jest.environments.globals.globals,
     },
     rules: {
-      ...jest.configs['flat/all'].rules,
+      ...jest.configs['flat/recommended'].rules,
+      ...jest.configs['flat/style'].rules,
 
-      'jest/max-expects': 'off', // Limiting expect statements is beneficial, but enforcing a strict count can be restrictive.
-      'jest/no-unnecessary-assertion': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful assertions.
-      'jest/no-hooks': 'off', // Would be time consuming to implement in existing repos.
-      'jest/prefer-each': 'off', // We find traditional for-loops more readable in certain contexts.
-      'jest/prefer-ending-with-an-expect': 'off', // It flags tests ending in a loop.
-      'jest/prefer-expect-assertions': 'off', // While useful, enforcing this can lead to verbose tests.
-      'jest/prefer-importing-jest-globals': 'off', // This would be very bothersome for existing repos.
-      'jest/prefer-todo': 'off',
-      'jest/require-top-level-describe': 'off', // Multiple top-level describe blocks or tests can be acceptable.
+      // A mock's signature has to match the function it replaces, so TypeScript rejects the suggested edit.
+      '@typescript-eslint/require-await': 'off',
+
       'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
 
-      // Padding rules have to be enabled individually if any are disabled.
-      'jest/padding-around-all': 'off', // This meta rule needs to be off if any individual padding rules are off.
-      'jest/padding-around-expect-groups': 'off', // Adds a lot of excess whitespace.
+      // Autofixable mock and matcher rules from the "all" ruleset, which the presets leave out.
+      'jest/no-unneeded-async-expect-function': 'error',
+      'jest/prefer-mock-promise-shorthand': 'error',
+      'jest/prefer-mock-return-shorthand': 'error',
+      'jest/prefer-spy-on': 'error', // Assigning "jest.fn()" over a method leaks the mock into later tests.
+      'jest/prefer-to-have-been-called-times': 'error',
+      'jest/prefer-to-have-been-called': 'error',
+
+      // Padding rules, not part of the presets.
       'jest/padding-around-after-all-blocks': 'error',
       'jest/padding-around-after-each-blocks': 'error',
       'jest/padding-around-before-all-blocks': 'error',
