@@ -72,6 +72,14 @@ const checks = [
     fixes: ['@typescript-eslint/no-unused-vars'],
   },
   {
+    // The fixer of this rule calls "context.getSourceCode", which ESLint v10 removed, so it crashes unless patched.
+    name: 'universal reports lodash method imports',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: "import map from 'lodash/map';\n\nexport const doubled = map([1], (value) => value * 2);\n",
+    reports: ['lodash/import-scope'],
+  },
+  {
     name: 'universal enables the type aware ruleset',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',

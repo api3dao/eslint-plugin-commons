@@ -1,3 +1,4 @@
+const { fixupPluginRules } = require('@eslint/compat');
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const importX = require('eslint-plugin-import-x');
 const lodash = require('eslint-plugin-lodash');
@@ -8,7 +9,9 @@ const lodash = require('eslint-plugin-lodash');
 const sharedPlugins = {
   '@typescript-eslint': tsPlugin,
   'import-x': importX.flatConfigs.recommended.plugins['import-x'],
-  lodash,
+  // eslint-plugin-lodash has no ESLint v10 support (its fixers still call the removed "context.getSourceCode"), so the
+  // plugin is patched.
+  lodash: fixupPluginRules(lodash),
 };
 
 // ESLint only lints ".js", ".cjs" and ".mjs" unless a configuration names other extensions, so every configuration

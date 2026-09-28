@@ -6,7 +6,6 @@ const packageJson = require('eslint-package-json').default;
 const checkFile = require('eslint-plugin-check-file');
 const functional = require('eslint-plugin-functional').default;
 const importX = require('eslint-plugin-import-x');
-const lodash = require('eslint-plugin-lodash');
 const promise = require('eslint-plugin-promise');
 const unicorn = require('eslint-plugin-unicorn').default;
 const globals = require('globals');
@@ -14,6 +13,7 @@ const globals = require('globals');
 const {
   moduleScopeConstantsNamingConvention,
   scopeToDefaultFiles,
+  sharedPlugins,
   universalImportOrderConfig,
   universalRestrictedImportsConfig,
 } = require('./internal');
@@ -43,7 +43,7 @@ module.exports = [
     unicorn.configs.recommended,
     promise.configs['flat/recommended'],
     // The lodash plugin does not ship a flat configuration, so its recommended rules are wired up by hand.
-    { plugins: { lodash }, rules: lodash.configs.recommended.rules },
+    { plugins: { lodash: sharedPlugins.lodash }, rules: sharedPlugins.lodash.configs.recommended.rules },
     {
       settings: {
         // The TypeScript resolver is pinned here rather than looked up by name from the consumer's node_modules, where a
