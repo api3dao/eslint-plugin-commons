@@ -80,6 +80,13 @@ const checks = [
     reports: ['lodash/import-scope'],
   },
   {
+    name: 'universal applies the regexp rules',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: 'export const pattern = /^(a+)+$/;\n',
+    reports: ['regexp/no-super-linear-backtracking'],
+  },
+  {
     name: 'universal enables the type aware ruleset',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',

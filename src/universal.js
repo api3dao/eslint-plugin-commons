@@ -5,6 +5,7 @@ const checkFile = require('eslint-plugin-check-file');
 const functional = require('eslint-plugin-functional').default;
 const importX = require('eslint-plugin-import-x');
 const promise = require('eslint-plugin-promise');
+const regexp = require('eslint-plugin-regexp');
 const unicorn = require('eslint-plugin-unicorn').default;
 const globals = require('globals');
 const tseslint = require('typescript-eslint');
@@ -41,6 +42,7 @@ module.exports = [
     importX.flatConfigs.typescript,
     unicorn.configs.recommended,
     promise.configs['flat/recommended'],
+    regexp.configs['flat/recommended'],
     // The lodash plugin does not ship a flat configuration, so its recommended rules are wired up by hand.
     { plugins: { lodash: sharedPlugins.lodash }, rules: sharedPlugins.lodash.configs.recommended.rules },
     {
