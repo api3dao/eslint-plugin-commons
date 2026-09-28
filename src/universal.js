@@ -118,6 +118,7 @@ module.exports = [
 
         /* Rule overrides for "unicorn" plugin */
         'unicorn/consistent-function-scoping': 'off', // Disabling due to the rule's constraints conflicting with established patterns, especially in test suites where local helper or mocking functions are prevalent and do not necessitate exports.
+        'unicorn/empty-brace-spaces': 'off', // Conflicts with Prettier.
         'unicorn/import-style': [
           'error',
           {
@@ -136,6 +137,7 @@ module.exports = [
         'unicorn/no-object-as-default-parameter': 'off', // Too restrictive. TypeScript can ensure that the default value matches the type.
         'unicorn/no-process-exit': 'off',
         'unicorn/no-useless-undefined': ['error', { checkArguments: false }], // We need to disable "checkArguments", because if a function expects a value of type "T | undefined" the undefined value needs to be passed explicitly.
+        'unicorn/number-literal-case': 'off', // Conflicts with Prettier.
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
         'unicorn/prefer-string-raw': 'off', // We commonly escape \ in strings.
         'unicorn/prefer-top-level-await': 'off',
