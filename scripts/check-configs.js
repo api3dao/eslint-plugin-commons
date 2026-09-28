@@ -2,9 +2,9 @@
 // meant to apply to. A configuration that silently matches nothing still lints "successfully", so without these checks
 // a broken ruleset looks exactly like a passing one.
 
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const { ESLint } = require('eslint');
 const jestPlugin = require('eslint-plugin-jest');
+const tseslint = require('typescript-eslint');
 
 const commons = require('../index');
 
@@ -18,7 +18,7 @@ const typeAwareRules = (pluginName, plugin) =>
 // The type aware rules need a real TypeScript program, which these checks deliberately do not set up. The remaining
 // rules need either jest, react or a Next.js project on disk, none of which this repo has.
 const linterOverrides = [
-  tsPlugin.configs['flat/disable-type-checked'],
+  tseslint.configs.disableTypeChecked,
   {
     settings: { react: { version: '19.0' } },
     rules: {

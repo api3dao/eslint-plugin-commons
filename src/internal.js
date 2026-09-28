@@ -1,13 +1,13 @@
 const { fixupPluginRules } = require('@eslint/compat');
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const importX = require('eslint-plugin-import-x');
 const lodash = require('eslint-plugin-lodash');
+const tseslint = require('typescript-eslint');
 
 // ESLint refuses to merge configurations that register the same plugin name with two different objects, so plugins
 // used by more than one of our rulesets are resolved once, here. Note that the object import-x registers in its own
 // shared configurations is not the module namespace, which is why it is unwrapped rather than used directly.
 const sharedPlugins = {
-  '@typescript-eslint': tsPlugin,
+  '@typescript-eslint': tseslint.plugin,
   'import-x': importX.flatConfigs.recommended.plugins['import-x'],
   // eslint-plugin-lodash has no ESLint v10 support (its fixers still call the removed "context.getSourceCode"), so the
   // plugin is patched.

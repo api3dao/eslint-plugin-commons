@@ -1,5 +1,5 @@
 const next = require('@next/eslint-plugin-next');
-const tsParser = require('@typescript-eslint/parser');
+const tseslint = require('typescript-eslint');
 
 const { scopeToDefaultFiles } = require('./internal');
 
@@ -9,7 +9,7 @@ module.exports = [
     next.configs['core-web-vitals'],
     {
       languageOptions: {
-        parser: tsParser,
+        parser: tseslint.parser,
         ecmaVersion: 2022, // Enable parsing of modern ECMAScript features.
         sourceType: 'module', // Enable ES6 import/export syntax.
         parserOptions: {

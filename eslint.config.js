@@ -1,4 +1,4 @@
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
+const tseslint = require('typescript-eslint');
 
 const commons = require('./index');
 
@@ -21,7 +21,7 @@ module.exports = [
   },
   ...commons.configs.universal,
   // This repo is plain CommonJS without a tsconfig, so the type aware rules have nothing to run against.
-  tsPlugin.configs['flat/disable-type-checked'],
+  tseslint.configs.disableTypeChecked,
   {
     files: ['**/*.js'],
     rules: {

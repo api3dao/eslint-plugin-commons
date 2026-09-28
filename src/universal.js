@@ -1,6 +1,4 @@
 const js = require('@eslint/js');
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
 const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
 const packageJson = require('eslint-package-json').default;
 const checkFile = require('eslint-plugin-check-file');
@@ -9,6 +7,7 @@ const importX = require('eslint-plugin-import-x');
 const promise = require('eslint-plugin-promise');
 const unicorn = require('eslint-plugin-unicorn').default;
 const globals = require('globals');
+const tseslint = require('typescript-eslint');
 
 const {
   moduleScopeConstantsNamingConvention,
@@ -37,7 +36,7 @@ module.exports = [
     js.configs.recommended,
     // The type aware ruleset is used because every API3 repo is TypeScript. Consumers therefore have to point
     // "languageOptions.parserOptions" at their tsconfig, as documented in the README.
-    ...tsPlugin.configs['flat/recommended-type-checked'],
+    ...tseslint.configs.recommendedTypeChecked,
     importX.flatConfigs.recommended,
     importX.flatConfigs.typescript,
     unicorn.configs.recommended,
@@ -52,7 +51,7 @@ module.exports = [
         'import-x/resolver-next': [createTypeScriptImportResolver()],
       },
       languageOptions: {
-        parser: tsParser,
+        parser: tseslint.parser,
         ecmaVersion: 2022, // Allows for the parsing of modern ECMAScript features.
         sourceType: 'module', // Allows for the use of imports.
         globals: { ...globals.node, ...globals.browser },

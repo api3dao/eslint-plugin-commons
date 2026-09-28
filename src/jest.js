@@ -1,5 +1,5 @@
-const tsParser = require('@typescript-eslint/parser');
 const jest = require('eslint-plugin-jest');
+const tseslint = require('typescript-eslint');
 
 // These rules are only applied to test files, so that the rest of the repo is unaffected.
 const testFiles = [
@@ -20,7 +20,7 @@ module.exports = [
     files: testFiles,
     plugins: jest.configs['flat/recommended'].plugins,
     languageOptions: {
-      parser: tsParser,
+      parser: tseslint.parser,
       ecmaVersion: 2022, // Enable parsing modern ECMAScript features.
       sourceType: 'module', // Enable the use of ES6 import/export syntax.
       globals: jest.environments.globals.globals,

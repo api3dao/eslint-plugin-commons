@@ -1,8 +1,8 @@
 const { fixupPluginRules } = require('@eslint/compat');
-const tsParser = require('@typescript-eslint/parser');
 const a11y = require('eslint-plugin-jsx-a11y');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
+const tseslint = require('typescript-eslint');
 
 const {
   scopeToDefaultFiles,
@@ -21,7 +21,7 @@ module.exports = scopeToDefaultFiles([
   a11y.flatConfigs.recommended, // Accessibility rules for JSX.
   {
     languageOptions: {
-      parser: tsParser,
+      parser: tseslint.parser,
       ecmaVersion: 2022, // Enable parsing of modern ECMAScript features.
       sourceType: 'module', // Enable ES6 import/export syntax.
       parserOptions: {
