@@ -7,7 +7,7 @@
   "exports": "./index.js",
   "sideEffects": false,
   "engines": {
-    "node": "^22.13.0 || >=24"
+    "node": "^22.22.2 || ^24.15.0 || >=26"
   },
   "packageManager": "pnpm@11.27.1",
   "scripts": {

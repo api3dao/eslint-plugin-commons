@@ -11,7 +11,7 @@ The modules consists of multiple ESLint configurations supporting wide variety o
 - `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
   extensions.
 
-Requires ESLint v10 and Node.js v22.13 or newer.
+Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
 ## Getting started
 
