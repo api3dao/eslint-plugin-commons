@@ -208,6 +208,7 @@ module.exports = [
             varsIgnorePattern: '^_',
             vars: 'all',
             ignoreRestSiblings: true, // Allow dropping a property by destructuring the rest of the object.
+            enableAutofixRemoval: { imports: true }, // Lets "eslint --fix" delete unused imports.
           },
         ],
         '@typescript-eslint/no-use-before-define': 'off', // Too restrictive, does not have a fixer and is not important.

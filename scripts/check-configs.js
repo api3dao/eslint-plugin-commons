@@ -56,6 +56,22 @@ const checks = [
     notReported: ['unicorn/import-style'],
   },
   {
+    // A single declaration cannot be out of order with another one, so only the sorting of named imports can report it.
+    name: 'universal sorts the names inside an import',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: "import { join, basename } from 'node:path';\n\nexport const a = join(basename('b'), 'c');\n",
+    reports: ['import-x/order'],
+  },
+  {
+    name: 'universal removes unused imports on fix',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: "import { basename, join } from 'node:path';\n\nexport const a = join('b', 'c');\n",
+    reports: ['@typescript-eslint/no-unused-vars'],
+    fixes: ['@typescript-eslint/no-unused-vars'],
+  },
+  {
     name: 'universal enables the type aware ruleset',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',
@@ -133,6 +149,11 @@ const runCheck = async (check) => {
   const reported = new Set(result.messages.map((message) => message.ruleId));
   const missing = (check.reports ?? []).filter((ruleId) => !reported.has(ruleId));
   if (missing.length > 0) return `expected rules did not report: ${missing.join(', ')}`;
+
+  const unfixable = (check.fixes ?? []).filter(
+    (ruleId) => !result.messages.some((message) => message.ruleId === ruleId && message.fix)
+  );
+  if (unfixable.length > 0) return `rules reported without an autofix: ${unfixable.join(', ')}`;
 
   const unexpected = (check.notReported ?? []).filter((ruleId) => reported.has(ruleId));
   if (unexpected.length > 0) return `rules reported but should not have: ${unexpected.join(', ')}`;

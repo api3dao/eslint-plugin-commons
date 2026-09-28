@@ -131,7 +131,10 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
    naming a rule that does not exist is itself reported as an error, so stale ones cannot be left behind.
 7. Scope any rule overrides of your own with a `files` key. v4 lints `package.json` as well as source, so a config
    object with `rules` but no `files` now applies to `package.json` too and will fail with "could not find plugin".
-8. Run `eslint --fix` and then clean up whatever is left.
+8. If the repo sorts imports with a Prettier plugin such as `prettier-plugin-organize-imports`, remove it.
+   `import-x/order` now sorts both the import statements and the names inside their braces, and the two tools disagree
+   on a few cases, so `prettier --write` and `eslint --fix` keep undoing each other there.
+9. Run `eslint --fix` and then clean up whatever is left.
 
 ## For developers
 

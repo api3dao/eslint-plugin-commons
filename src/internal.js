@@ -37,6 +37,8 @@ const universalImportOrderConfig = {
     order: 'asc',
     caseInsensitive: true,
   },
+  // Sorts the names inside braces like TypeScript's "Organize Imports".
+  named: { enabled: true, require: false, cjsExports: false, types: 'types-last' },
 };
 
 // Reserves SCREAMING_SNAKE_CASE for module scope constants. This replaces "@shopify/prefer-module-scope-constants",
