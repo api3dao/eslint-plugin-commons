@@ -94,6 +94,20 @@ const checks = [
     enabledInBaseConfig: ['@typescript-eslint/await-thenable', '@typescript-eslint/only-throw-error'],
   },
   {
+    name: 'universal enables the hand picked strict rules',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: 'export const a = 1;\n',
+    enabledInBaseConfig: [
+      '@typescript-eslint/no-mixed-enums',
+      '@typescript-eslint/no-non-null-asserted-nullish-coalescing',
+      '@typescript-eslint/no-unnecessary-template-expression',
+      '@typescript-eslint/no-useless-default-assignment',
+      '@typescript-eslint/prefer-reduce-type-parameter',
+      '@typescript-eslint/switch-exhaustiveness-check',
+    ],
+  },
+  {
     // ESLint only lints ".js", ".cjs" and ".mjs" by default, so an extension missing from "defaultFiles" is
     // silently skipped rather than reported.
     name: 'universal covers every TypeScript and JavaScript extension',
