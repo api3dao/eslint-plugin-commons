@@ -29,9 +29,6 @@ module.exports = [
       ...jest.configs['flat/recommended'].rules,
       ...jest.configs['flat/style'].rules,
 
-      // A mock's signature has to match the function it replaces, so TypeScript rejects the suggested edit.
-      '@typescript-eslint/require-await': 'off',
-
       'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
 
       // Autofixable mock and matcher rules from the "all" ruleset, which the presets leave out.
