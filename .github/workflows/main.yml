@@ -42,6 +42,8 @@ jobs:
         run: pnpm install
       - name: Lint
         run: pnpm run prettier:check && pnpm run eslint:check
+      - name: Check exported configs
+        run: pnpm run test
 
   required-checks-passed:
     name: All required checks passed

@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install dependencies for eslint-plugin-commons
@@ -37,6 +37,12 @@ jobs:
         with:
           repository: api3dao/${{ env.repo_name }}
           path: ${{ env.repo_name }}
+
+      # The install below runs inside the other repo, so it needs the pnpm version that repo pins rather than ours.
+      - name: Install pnpm for ${{ env.repo_name }}
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ${{ env.repo_name }}/package.json
 
       # Workaround for inability to clone outside of workspace directory
       # See: https://github.com/actions/checkout/issues/197#issuecomment-603651324
