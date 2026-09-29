@@ -233,6 +233,7 @@ module.exports = [
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/require-await': 'off', // Removing "async" fails type checking wherever the function must return a Promise (overrides, typed callbacks, mocks), and "no-floating-promises" already catches most forgotten awaits.
+        '@typescript-eslint/restrict-template-expressions': 'off', // Arrays, URLSearchParams, "never" in exhaustiveness errors etc. are often interpolated on purpose, and "no-base-to-string" already reports values that would print as "[object Object]".
         '@typescript-eslint/strict-boolean-expressions': 'off', // While the rule is reasonable, it is often convenient and intended to just check whether the value is not null or undefined. Enabling this rule would make the code more verbose. See: https://typescript-eslint.io/rules/strict-boolean-expressions/
         '@typescript-eslint/unbound-method': 'off', // Reports issues for common patterns in tests (e.g. "expect(logger.warn)..."). Often the issue yields false positives.
         '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
