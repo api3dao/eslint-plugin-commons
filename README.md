@@ -117,24 +117,27 @@ module.exports = [
 v4 requires ESLint v10 and flat configuration. To migrate a repo:
 
 1. Bump `eslint` to `^10.4.0` and `@api3/eslint-plugin-commons` to `^4.0.0`.
-2. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. Move the contents of `.eslintignore` into an
+2. Remove `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` from the repo's own `devDependencies`. The
+   configurations ship typescript-eslint v8 themselves. If the repo's own config needs typescript-eslint, depend on
+   `typescript-eslint` `^8` instead.
+3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. Move the contents of `.eslintignore` into an
    `{ ignores: [...] }` config object, and move `parserOptions` under `languageOptions`.
-3. Drop `--ext js,ts,tsx,jsx` from the lint script. Flat config decides which files to lint, and these configurations
+4. Drop `--ext js,ts,tsx,jsx` from the lint script. Flat config decides which files to lint, and these configurations
    already cover `cjs`, `cts`, `js`, `jsx`, `mjs`, `mts`, `ts` and `tsx`.
-4. Rename `import/*` rules and `eslint-disable` comments to `import-x/*`. `eslint-plugin-import` does not support ESLint
+5. Rename `import/*` rules and `eslint-disable` comments to `import-x/*`. `eslint-plugin-import` does not support ESLint
    v10, so it was replaced by the maintained `eslint-plugin-import-x` fork. The rules and their options are unchanged.
-5. Rename `deprecation/deprecation` comments to `@typescript-eslint/no-deprecated`. The `eslint-plugin-deprecation`
+6. Rename `deprecation/deprecation` comments to `@typescript-eslint/no-deprecated`. The `eslint-plugin-deprecation`
    plugin only supports ESLint v8 and was removed.
-6. Rename `@shopify/prefer-module-scope-constants` comments to `@typescript-eslint/naming-convention`, and delete
+7. Rename `@shopify/prefer-module-scope-constants` comments to `@typescript-eslint/naming-convention`, and delete
    `@shopify/prefer-early-return` ones. The `@shopify/eslint-plugin` dependency was dropped; the pinned
    `eslint-plugin-unicorn` has no equivalent of `prefer-early-return`, so that rule is not enforced for now. A directive
    naming a rule that does not exist is itself reported as an error, so stale ones cannot be left behind.
-7. Scope any rule overrides of your own with a `files` key. v4 lints `package.json` as well as source, so a config
+8. Scope any rule overrides of your own with a `files` key. v4 lints `package.json` as well as source, so a config
    object with `rules` but no `files` now applies to `package.json` too and will fail with "could not find plugin".
-8. If the repo sorts imports with a Prettier plugin such as `prettier-plugin-organize-imports`, remove it.
+9. If the repo sorts imports with a Prettier plugin such as `prettier-plugin-organize-imports`, remove it.
    `import-x/order` now sorts both the import statements and the names inside their braces, and the two tools disagree
    on a few cases, so `prettier --write` and `eslint --fix` keep undoing each other there.
-9. Run `eslint --fix` and then clean up whatever is left.
+10. Run `eslint --fix` and then clean up whatever is left.
 
 ## For developers
 
