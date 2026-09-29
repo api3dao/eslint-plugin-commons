@@ -1,19 +1,7 @@
 const jest = require('eslint-plugin-jest');
 const tseslint = require('typescript-eslint');
 
-// These rules are only applied to test files, so that the rest of the repo is unaffected.
-const testFiles = [
-  '**/*.test.ts',
-  '**/*.test.tsx',
-  '**/*.spec.ts',
-  '**/*.spec.tsx',
-  '**/*.feature.ts',
-  '**/*.feature.tsx',
-  '**/*.test.js',
-  '**/*.test.jsx',
-  '**/*.spec.js',
-  '**/*.spec.jsx',
-];
+const { testFiles } = require('./internal');
 
 module.exports = [
   {
