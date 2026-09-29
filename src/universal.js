@@ -5,6 +5,7 @@ const checkFile = require('eslint-plugin-check-file');
 const functional = require('eslint-plugin-functional').default;
 const importX = require('eslint-plugin-import-x');
 const promise = require('eslint-plugin-promise');
+const regexp = require('eslint-plugin-regexp');
 const unicorn = require('eslint-plugin-unicorn').default;
 const globals = require('globals');
 const tseslint = require('typescript-eslint');
@@ -41,6 +42,7 @@ module.exports = [
     importX.flatConfigs.typescript,
     unicorn.configs.recommended,
     promise.configs['flat/recommended'],
+    regexp.configs['flat/recommended'],
     // The lodash plugin does not ship a flat configuration, so its recommended rules are wired up by hand.
     { plugins: { lodash: sharedPlugins.lodash }, rules: sharedPlugins.lodash.configs.recommended.rules },
     {
@@ -193,10 +195,13 @@ module.exports = [
             },
           },
         ],
+        '@typescript-eslint/no-mixed-enums': 'error',
+        '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
         '@typescript-eslint/no-non-null-assertion': 'off', // Too restrictive. The inference is often not powerful enough or there is not enough context.
         '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
         '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
         '@typescript-eslint/no-unnecessary-condition': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful conditionals.
+        '@typescript-eslint/no-unnecessary-template-expression': 'error',
         '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/no-unsafe-assignment': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/no-unsafe-call': 'off', // Too restrictive, often false yields to more verbose code.
@@ -213,6 +218,7 @@ module.exports = [
           },
         ],
         '@typescript-eslint/no-use-before-define': 'off', // Too restrictive, does not have a fixer and is not important.
+        '@typescript-eslint/no-useless-default-assignment': 'error',
         // The base rule also flags declarations that carry an explicit type annotation, which cannot be rewritten as a
         // destructuring without making them worse. This version knows about the annotation and leaves them alone.
         '@typescript-eslint/prefer-destructuring': [
@@ -232,9 +238,16 @@ module.exports = [
           },
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
+        '@typescript-eslint/prefer-reduce-type-parameter': 'error',
         '@typescript-eslint/require-await': 'off', // Removing "async" fails type checking wherever the function must return a Promise (overrides, typed callbacks, mocks), and "no-floating-promises" already catches most forgotten awaits.
         '@typescript-eslint/restrict-template-expressions': 'off', // Arrays, URLSearchParams, "never" in exhaustiveness errors etc. are often interpolated on purpose, and "no-base-to-string" already reports values that would print as "[object Object]".
         '@typescript-eslint/strict-boolean-expressions': 'off', // While the rule is reasonable, it is often convenient and intended to just check whether the value is not null or undefined. Enabling this rule would make the code more verbose. See: https://typescript-eslint.io/rules/strict-boolean-expressions/
+        '@typescript-eslint/switch-exhaustiveness-check': [
+          'error',
+          {
+            considerDefaultExhaustiveForUnions: true,
+          },
+        ],
         '@typescript-eslint/unbound-method': 'off', // Reports issues for common patterns in tests (e.g. "expect(logger.warn)..."). Often the issue yields false positives.
         '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
 
