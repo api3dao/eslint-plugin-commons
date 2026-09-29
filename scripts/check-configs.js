@@ -121,6 +121,7 @@ const checks = [
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['jest/no-focused-tests'],
     enabled: ['jest/no-identical-title', 'jest/padding-around-test-blocks'],
+    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
   },
   {
     name: 'jest applies to spec files',
@@ -134,6 +135,7 @@ const checks = [
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
+    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
     notEnabled: ['jest/'],
   },
   {
@@ -143,12 +145,14 @@ const checks = [
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['vitest/no-focused-tests'],
     enabled: ['vitest/no-identical-title', 'vitest/padding-around-test-blocks'],
+    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
   },
   {
     name: 'vitest does not leak into non test files',
     configs: [...commons.configs.universal, ...commons.configs.vitest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
+    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
     notEnabled: ['vitest/'],
   },
   {
