@@ -141,6 +141,7 @@ module.exports = [
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
         'unicorn/no-process-exit': 'off',
         'unicorn/no-top-level-assignment-in-function': 'off', // Every hit across the org is a module scope store or lazy singleton with an exported setter, and the rule has no options to allow that.
+        'unicorn/no-unreadable-array-destructuring': ['error', { maximumIgnoredElements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/no-unreadable-for-of-expression': 'off', // Too strict, it flags readable idioms like "list ?? []" and "new Set(list)".
         'unicorn/no-unreadable-object-destructuring': 'off', // Alternatives are often more verbose and less readable.
         'unicorn/no-unsafe-property-key': 'off', // False positives on template literal types like viem's "Hex". The upstream guard for them is wired to wrong TypeFlags constants, still broken in v76.
