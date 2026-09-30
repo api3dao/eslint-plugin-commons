@@ -18,8 +18,6 @@ module.exports = [
       ...jest.configs['flat/style'].rules,
 
       'jest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
-      'unicorn/no-global-object-property-assignment': 'off', // Tests replace globals like "fetch" or "window" to mock them.
-      'unicorn/prefer-https': 'off', // URLs in tests are often placeholder fixtures.
 
       // Autofixable mock and matcher rules from the "all" ruleset, which the presets leave out.
       'jest/no-unneeded-async-expect-function': 'error',

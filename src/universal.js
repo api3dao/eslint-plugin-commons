@@ -10,6 +10,8 @@ const globals = require('globals');
 const tseslint = require('typescript-eslint');
 
 const {
+  allTestFiles,
+  hardhatTestFiles,
   moduleScopeConstantsNamingConvention,
   scopeToDefaultFiles,
   sharedPlugins,
@@ -114,7 +116,6 @@ module.exports = [
 
         /* Rule overrides for "unicorn" plugin */
         'unicorn/consistent-boolean-name': 'off', // Flags every boolean returning function not prefixed with is/has/can/should, no option to exempt them - arrow functions count as variables, so "checkFunctions" does not apply.
-        'unicorn/consistent-function-scoping': 'off', // Disabling due to the rule's constraints conflicting with established patterns, especially in test suites where local helper or mocking functions are prevalent and do not necessitate exports.
         'unicorn/empty-brace-spaces': 'off', // Conflicts with Prettier.
         'unicorn/import-style': [
           'error',
@@ -283,6 +284,22 @@ module.exports = [
       files: ['**/*.config.{cjs,cts,js,mjs,mts,ts}', '**/global-{setup,teardown}.{cjs,cts,js,mjs,mts,ts}'],
       rules: {
         'import-x/no-default-export': 'off',
+      },
+    },
+    {
+      // General rules that do not fit test code.
+      files: allTestFiles,
+      rules: {
+        'unicorn/consistent-function-scoping': 'off', // Tests keep helpers and mocks inside the "describe" block that uses them.
+        'unicorn/no-global-object-property-assignment': 'off', // Tests replace globals like "fetch" or "window" to mock them.
+        'unicorn/prefer-https': 'off', // URLs in tests are often placeholder fixtures or local servers such as "http://localhost:5173".
+      },
+    },
+    {
+      // Hardhat tests are named after the contract they test, and Solidity contract names are PascalCase.
+      files: hardhatTestFiles,
+      rules: {
+        'unicorn/filename-case': ['error', { cases: { kebabCase: true, pascalCase: true }, checkDirectories: false }],
       },
     },
   ]),

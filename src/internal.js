@@ -71,7 +71,14 @@ const testFiles = [
 // The "*.spec.*" suffix is reserved for Playwright tests, so the Jest and Vitest globs above leave it out.
 const playwrightFiles = ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'];
 
+// API3 repos name each test after the contract it tests, e.g. "Api3ServerV1.sol.ts".
+const hardhatTestFiles = ['**/*.sol.ts', '**/*.sol.js'];
+
+const allTestFiles = [...testFiles, ...playwrightFiles, ...hardhatTestFiles];
+
 module.exports = {
+  allTestFiles,
+  hardhatTestFiles,
   moduleScopeConstantsNamingConvention,
   playwrightFiles,
   scopeToDefaultFiles,

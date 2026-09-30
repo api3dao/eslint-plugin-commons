@@ -130,13 +130,38 @@ const checks = [
     notEnabled: ['import-x/no-default-export'],
   },
   {
+    // Hardhat has no test configuration of our own, so universal is what relaxes the test rules for its files.
+    name: 'universal relaxes the test rules in Hardhat tests',
+    configs: commons.configs.universal,
+    filePath: 'test/api3-server-v1/Api3ServerV1.sol.ts',
+    code: 'export const a = 1;\n',
+    notReported: ['unicorn/filename-case'],
+    enabled: ['import-x/order', 'unicorn/filename-case'],
+    notEnabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
+  },
+  {
+    name: 'universal still checks the file name casing of Hardhat tests',
+    configs: commons.configs.universal,
+    filePath: 'test/helpers/someHelper.sol.ts',
+    code: 'export const a = 1;\n',
+    reports: ['unicorn/filename-case'],
+  },
+  {
     name: 'jest applies to test files',
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.test.ts',
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['jest/no-focused-tests'],
     enabled: ['jest/no-identical-title', 'jest/padding-around-test-blocks'],
-    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+    notEnabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
   },
   {
     name: 'jest and vitest leave spec files to playwright',
@@ -150,7 +175,11 @@ const checks = [
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
-    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+    enabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
     notEnabled: ['jest/'],
   },
   {
@@ -160,14 +189,22 @@ const checks = [
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['vitest/no-focused-tests'],
     enabled: ['vitest/no-identical-title', 'vitest/padding-around-test-blocks'],
-    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+    notEnabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
   },
   {
     name: 'vitest does not leak into non test files',
     configs: [...commons.configs.universal, ...commons.configs.vitest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
-    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+    enabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
     notEnabled: ['vitest/'],
   },
   {
@@ -178,7 +215,12 @@ const checks = [
     reports: ['playwright/no-focused-test'],
     notReported: ['playwright/no-skipped-test'],
     enabled: ['playwright/missing-playwright-await'],
-    notEnabled: ['no-empty-pattern', 'unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+    notEnabled: [
+      'no-empty-pattern',
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
   },
   {
     name: 'playwright does not leak into test files',
