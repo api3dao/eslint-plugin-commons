@@ -107,8 +107,8 @@ module.exports = scopeToDefaultFiles([
         },
       ],
 
-      /* Overrides for "lodash" plugin */
       'lodash/import-scope': ['error', 'method'],
+      'unicorn/prefer-global-this': 'off', // Browser code uses "window." to mark browser-only APIs, and "globalThis" adds no portability there.
     },
   },
 ]);
