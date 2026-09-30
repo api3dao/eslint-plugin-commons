@@ -278,5 +278,12 @@ module.exports = [
         'lodash/prop-shorthand': 'off',
       },
     },
+    {
+      // Many tools load these files through their default export.
+      files: ['**/*.config.{cjs,cts,js,mjs,mts,ts}', '**/global-{setup,teardown}.{cjs,cts,js,mjs,mts,ts}'],
+      rules: {
+        'import-x/no-default-export': 'off',
+      },
+    },
   ]),
 ];

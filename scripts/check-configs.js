@@ -114,6 +114,22 @@ const checks = [
     enabled: ['import-x/no-default-export'],
   },
   {
+    name: 'universal allows default exports in tool config files',
+    configs: commons.configs.universal,
+    filePath: 'packages/app/hardhat.build.config.ts',
+    code: 'const config = {};\n\nexport default config;\n',
+    enabled: ['import-x/order'],
+    notEnabled: ['import-x/no-default-export'],
+  },
+  {
+    name: 'universal allows default exports in global setup files',
+    configs: commons.configs.universal,
+    filePath: 'tests/e2e/global-setup.ts',
+    code: 'export default async function globalSetup() {}\n',
+    enabled: ['import-x/order'],
+    notEnabled: ['import-x/no-default-export'],
+  },
+  {
     name: 'jest applies to test files',
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.test.ts',
