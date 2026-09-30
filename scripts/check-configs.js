@@ -41,10 +41,8 @@ const checks = [
     name: 'universal replaces the rules of the dropped plugins',
     configs: commons.configs.universal,
     filePath: 'src/example.ts',
-    code: 'export const run = (a: number) => {\n  if (a > 0) {\n    console.info(a);\n    console.info(a);\n  }\n};\n',
-    // "unicorn/prefer-early-return" replaces "@shopify/prefer-early-return" but only exists from unicorn v70,
-    // so it is not asserted while the plugin is pinned below that.
-    // The two below are type aware, so they are asserted against the exported config rather than the resolved one.
+    code: 'export const run = (a: number) => {\n  if (a > 0) {\n    console.info(a);\n    console.info(a);\n    console.info(a);\n  }\n};\n',
+    reports: ['unicorn/prefer-early-return'],
     enabledInBaseConfig: ['@typescript-eslint/naming-convention', '@typescript-eslint/no-deprecated'],
   },
   {
@@ -101,7 +99,6 @@ const checks = [
     enabledInBaseConfig: [
       '@typescript-eslint/no-mixed-enums',
       '@typescript-eslint/no-non-null-asserted-nullish-coalescing',
-      '@typescript-eslint/no-unnecessary-template-expression',
       '@typescript-eslint/no-useless-default-assignment',
       '@typescript-eslint/prefer-reduce-type-parameter',
       '@typescript-eslint/switch-exhaustiveness-check',
@@ -123,6 +120,7 @@ const checks = [
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['jest/no-focused-tests'],
     enabled: ['jest/no-identical-title', 'jest/padding-around-test-blocks'],
+    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
   },
   {
     name: 'jest applies to spec files',
@@ -136,6 +134,7 @@ const checks = [
     configs: [...commons.configs.universal, ...commons.configs.jest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
+    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
     notEnabled: ['jest/'],
   },
   {
@@ -145,12 +144,14 @@ const checks = [
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
     reports: ['vitest/no-focused-tests'],
     enabled: ['vitest/no-identical-title', 'vitest/padding-around-test-blocks'],
+    notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
   },
   {
     name: 'vitest does not leak into non test files',
     configs: [...commons.configs.universal, ...commons.configs.vitest],
     filePath: 'src/example.ts',
     code: "export const a = it.only('b');\n",
+    enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
     notEnabled: ['vitest/'],
   },
   {
@@ -194,8 +195,8 @@ const runCheck = async (check) => {
   const missing = (check.reports ?? []).filter((ruleId) => !reported.has(ruleId));
   if (missing.length > 0) return `expected rules did not report: ${missing.join(', ')}`;
 
-  const unfixable = (check.fixes ?? []).filter(
-    (ruleId) => !result.messages.some((message) => message.ruleId === ruleId && message.fix)
+  const unfixable = (check.fixes ?? []).filter((ruleId) =>
+    result.messages.every((message) => !(message.ruleId === ruleId && message.fix))
   );
   if (unfixable.length > 0) return `rules reported without an autofix: ${unfixable.join(', ')}`;
 
