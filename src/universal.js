@@ -150,6 +150,7 @@ module.exports = [
         'unicorn/prefer-bigint-literals': 'off', // Flags dApp ids defined from strings like BigInt('123...').
         'unicorn/prefer-continue': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/prefer-early-return': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
+        'unicorn/prefer-math-min-max': 'off', // Its fix breaks bigint comparisons when the type is inferred.
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
         'unicorn/prefer-number-coercion': 'off', // "Number()" turns an empty string into 0, which may not be desirable.
         'unicorn/prefer-simple-sort-comparator': 'off', // Its suggested "a - b" comparator does not work for bigints.
