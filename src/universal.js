@@ -215,7 +215,6 @@ module.exports = [
         '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
         '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
         '@typescript-eslint/no-unnecessary-condition': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful conditionals.
-        '@typescript-eslint/no-unnecessary-template-expression': 'error',
         '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/no-unsafe-assignment': 'off', // Too restrictive, often false yields to more verbose code.
         '@typescript-eslint/no-unsafe-call': 'off', // Too restrictive, often false yields to more verbose code.

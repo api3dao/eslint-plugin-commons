@@ -99,7 +99,6 @@ const checks = [
     enabledInBaseConfig: [
       '@typescript-eslint/no-mixed-enums',
       '@typescript-eslint/no-non-null-asserted-nullish-coalescing',
-      '@typescript-eslint/no-unnecessary-template-expression',
       '@typescript-eslint/no-useless-default-assignment',
       '@typescript-eslint/prefer-reduce-type-parameter',
       '@typescript-eslint/switch-exhaustiveness-check',
