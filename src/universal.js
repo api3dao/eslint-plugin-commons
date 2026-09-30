@@ -128,7 +128,6 @@ module.exports = [
         ],
         'unicorn/max-nested-calls': 'off', // Over half the reports are zod schemas and most of the rest ethers encoding or jest matchers.
         'unicorn/name-replacements': 'off', // Successor to "prevent-abbreviations". Reports many false positives (e.g. "acc" or "env") and leads to more verbose code.
-        'unicorn/no-abusive-eslint-disable': 'off', // Already covered by different ruleset.
         'unicorn/no-array-reduce': 'off', // We are OK with using reduce occasionally, but I agree with the author that the code using reduce can easily get complex.
         'unicorn/no-break-in-nested-loop': 'off', // Mostly the mandatory "break" of a switch case and guard clause "continue"s, and the suggested fix is to extract the enclosing block into a function.
         'unicorn/no-computed-property-existence-check': 'off', // The suggested "Object.hasOwn" is often less readable than the existence check it replaces.
@@ -138,7 +137,6 @@ module.exports = [
         'unicorn/no-non-function-verb-prefix': 'off', // Causes too many false positives across repos.
         'unicorn/no-nonstandard-builtin-properties': 'off', // TypeScript already reports misspelled built-in properties, and the rule also flags deliberate extensions such as the "BigInt.prototype.toJSON" patch.
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
-        'unicorn/no-object-as-default-parameter': 'off', // Too restrictive. TypeScript can ensure that the default value matches the type.
         'unicorn/no-process-exit': 'off',
         'unicorn/no-top-level-assignment-in-function': 'off', // Every hit across the org is a module scope store or lazy singleton with an exported setter, and the rule has no options to allow that.
         'unicorn/no-unreadable-for-of-expression': 'off', // Too strict, it flags readable idioms like "list ?? []" and "new Set(list)".
