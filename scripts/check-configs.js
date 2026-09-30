@@ -144,6 +144,42 @@ const checks = [
     ],
   },
   {
+    name: 'universal relaxes the test rules in files that only tests use',
+    configs: commons.configs.universal,
+    filePath: 'tests/e2e/fixtures/wallet.ts',
+    code: 'export const a = 1;\n',
+    enabled: ['import-x/order'],
+    notEnabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
+  },
+  {
+    name: 'universal relaxes the test rules in test setup files',
+    configs: commons.configs.universal,
+    filePath: 'jest.setup.js',
+    code: 'export const a = 1;\n',
+    enabled: ['import-x/order'],
+    notEnabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
+  },
+  {
+    // A bare "setup" name is common in source code, so it must not relax the test rules.
+    name: 'universal keeps the test rules in source setup files',
+    configs: commons.configs.universal,
+    filePath: 'src/bots/example/setup.ts',
+    code: 'export const a = 1;\n',
+    enabled: [
+      'unicorn/consistent-function-scoping',
+      'unicorn/no-global-object-property-assignment',
+      'unicorn/prefer-https',
+    ],
+  },
+  {
     name: 'universal still checks the file name casing of Hardhat tests',
     configs: commons.configs.universal,
     filePath: 'test/helpers/someHelper.sol.ts',

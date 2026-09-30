@@ -50,8 +50,11 @@ runner, never both.
 Playwright tests. A repo with Playwright tests spreads it next to `configs.jest` or `configs.vitest`.
 
 Hardhat tests are named after the contract they test, e.g. `Api3ServerV1.sol.ts`, and have no configuration of their
-own. `configs.universal` allows PascalCase names for them, and turns off the few rules that do not fit test code in
-every kind of test file (`*.test.*`, `*.spec.*` and `*.sol.{ts,js}`).
+own. `configs.universal` allows PascalCase names for them.
+
+`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`, `*.spec.*`
+and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`, `__tests__`, `__mocks__` or
+`e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
 
 The configurations are plain CommonJS, so they can also be imported from an ESM `eslint.config.js`:
 

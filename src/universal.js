@@ -15,6 +15,7 @@ const {
   moduleScopeConstantsNamingConvention,
   scopeToDefaultFiles,
   sharedPlugins,
+  testConstantsNamingConvention,
   universalImportOrderConfig,
   universalRestrictedImportsConfig,
 } = require('./internal');
@@ -290,9 +291,10 @@ module.exports = [
       // General rules that do not fit test code.
       files: allTestFiles,
       rules: {
-        'unicorn/consistent-function-scoping': 'off', // Tests keep helpers and mocks inside the "describe" block that uses them.
+        '@typescript-eslint/naming-convention': testConstantsNamingConvention, // Allows SCREAMING_SNAKE_CASE for constants in any scope.
+        'unicorn/consistent-function-scoping': 'off', // Tests keep helpers inside the "describe" that uses them, and Playwright page functions cannot reach outer scope.
         'unicorn/no-global-object-property-assignment': 'off', // Tests replace globals like "fetch" or "window" to mock them.
-        'unicorn/prefer-https': 'off', // URLs in tests are often placeholder fixtures or local servers such as "http://localhost:5173".
+        'unicorn/prefer-https': 'off', // Tests often point at placeholder domains or local servers such as "http://localhost:5173".
       },
     },
     {
