@@ -57,6 +57,7 @@ module.exports = scopeToDefaultFiles([
       'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'ignore' }],
       'react/forbid-component-props': ['error', { forbid: [] }],
       'react/forbid-dom-props': ['error', { forbid: [] }],
+      'react/jsx-child-element-spacing': 'off', // Conflicts with prettier.
       'react/jsx-closing-bracket-location': 'off', // Conflicts with prettier's "bracketSameLine" option.
       'react/jsx-closing-tag-location': 'off', // Handled by prettier and "react/self-closing-comp".
       'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never', propElementValues: 'always' }],
