@@ -67,7 +67,7 @@ module.exports = [
         /* Rule definitions and overrides for standard ESLint rules */
         camelcase: ['error', { allow: ['^.+__factory$'] }], // Typechain generates "<Contract>__factory" bindings that we do not control.
         curly: ['error', 'multi-line', 'consistent'],
-        eqeqeq: 'error',
+        eqeqeq: ['error', 'always', { null: 'ignore' }], // Allows "value == null", which matches both null and undefined.
         'no-await-in-loop': 'off', // Too restrictive, often false yields to more verbose code.
         'no-constant-condition': 'off', // Writing a "while(true)"" loop is often the most readable way to express the intent.
         'no-fallthrough': 'off', // Does not work well with typescript exhaustive enums.
@@ -276,6 +276,7 @@ module.exports = [
         'lodash/path-style': 'off', // Can potentially trigger TS errors. Both variants have use cases when they are more readable.
         'lodash/prefer-constant': 'off', // Reaching for "_.constant" is less readable than an arrow returning the value, and it forces a lodash import where none is needed.
         'lodash/prefer-immutable-method': 'off',
+        'lodash/prefer-is-nil': 'off', // The native "value == null" does the same check without a lodash import.
         'lodash/prefer-lodash-method': 'off', // Disagree with this rule. Using the native method is often simpler.
         'lodash/prefer-lodash-typecheck': 'off',
         'lodash/prop-shorthand': 'off',

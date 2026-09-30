@@ -54,6 +54,14 @@ const checks = [
     notReported: ['unicorn/import-style'],
   },
   {
+    name: 'universal allows loose comparisons with null',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: 'export const isMissing = (value?: number | null) => value == null;\n',
+    enabled: ['eqeqeq'],
+    notReported: ['eqeqeq'],
+  },
+  {
     // A single declaration cannot be out of order with another one, so only the sorting of named imports can report it.
     name: 'universal sorts the names inside an import',
     configs: commons.configs.universal,
