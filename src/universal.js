@@ -251,6 +251,7 @@ module.exports = [
           'error',
           {
             ignoreConditionalTests: true, // Its more intuitive to use logical operators in conditionals.
+            ignorePrimitives: { boolean: true, string: true }, // Allow "||" on optional boolean flags and as a fallback for empty strings.
           },
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
