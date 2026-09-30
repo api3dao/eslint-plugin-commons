@@ -10,6 +10,8 @@ The modules consists of multiple ESLint configurations supporting wide variety o
   `react`.
 - `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
   extensions.
+- `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
+  which are reserved for Playwright tests.
 
 Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
@@ -43,6 +45,9 @@ module.exports = [
 
 `configs.jest` and `configs.vitest` both apply to the same test file names, so a repo spreads whichever matches its test
 runner, never both.
+
+`configs.playwright` applies to `*.spec.*` files, so name unit and integration tests `*.test.*` and keep `*.spec.*` for
+Playwright tests. A repo with Playwright tests spreads it next to `configs.jest` or `configs.vitest`.
 
 The configurations are plain CommonJS, so they can also be imported from an ESM `eslint.config.js`:
 

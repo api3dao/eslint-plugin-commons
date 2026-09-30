@@ -62,18 +62,18 @@ const moduleScopeConstantsNamingConvention = [
 const testFiles = [
   '**/*.test.ts',
   '**/*.test.tsx',
-  '**/*.spec.ts',
-  '**/*.spec.tsx',
   '**/*.feature.ts',
   '**/*.feature.tsx',
   '**/*.test.js',
   '**/*.test.jsx',
-  '**/*.spec.js',
-  '**/*.spec.jsx',
 ];
+
+// The "*.spec.*" suffix is reserved for Playwright tests, so the Jest and Vitest globs above leave it out.
+const playwrightFiles = ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'];
 
 module.exports = {
   moduleScopeConstantsNamingConvention,
+  playwrightFiles,
   scopeToDefaultFiles,
   testFiles,
   sharedPlugins,

@@ -123,11 +123,11 @@ const checks = [
     notEnabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
   },
   {
-    name: 'jest applies to spec files',
-    configs: [...commons.configs.universal, ...commons.configs.jest],
+    name: 'jest and vitest leave spec files to playwright',
+    configs: [...commons.configs.universal, ...commons.configs.jest, ...commons.configs.vitest],
     filePath: 'src/example.spec.ts',
     code: "describe('a', () => {\n  it.only('b', () => {\n    expect(1).toBe(1);\n  });\n});\n",
-    reports: ['jest/no-focused-tests'],
+    notEnabled: ['jest/', 'vitest/'],
   },
   {
     name: 'jest does not leak into non test files',
@@ -153,6 +153,23 @@ const checks = [
     code: "export const a = it.only('b');\n",
     enabled: ['unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
     notEnabled: ['vitest/'],
+  },
+  {
+    name: 'playwright applies to spec files',
+    configs: [...commons.configs.universal, ...commons.configs.playwright],
+    filePath: 'e2e/example.spec.ts',
+    code: "import { expect, test } from '@playwright/test';\n\ntest.only('a', async ({ page }) => {\n  test.skip(!process.env.BASE_URL, 'Needs a running app');\n  await expect(page).toHaveTitle('b');\n});\n",
+    reports: ['playwright/no-focused-test'],
+    notReported: ['playwright/no-skipped-test'],
+    enabled: ['playwright/missing-playwright-await'],
+    notEnabled: ['no-empty-pattern', 'unicorn/no-global-object-property-assignment', 'unicorn/prefer-https'],
+  },
+  {
+    name: 'playwright does not leak into test files',
+    configs: [...commons.configs.universal, ...commons.configs.playwright],
+    filePath: 'src/example.test.ts',
+    code: "export const a = test.only('b');\n",
+    notEnabled: ['playwright/'],
   },
   {
     name: 'react applies to TSX files',
