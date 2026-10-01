@@ -18,8 +18,6 @@ module.exports = [
       ...vitest.configs.recommended.rules,
 
       'vitest/valid-title': 'off', // This restriction can prevent using titles like "<function-name>.name".
-      'unicorn/no-global-object-property-assignment': 'off', // Tests replace globals like "fetch" or "window" to mock them, and each test file runs with its own global.
-      'unicorn/prefer-https': 'off', // URLs in tests are often placeholder fixtures.
 
       // Matcher rules that the recommended ruleset leaves out. They mirror what the Jest configuration enables.
       'vitest/prefer-to-be': 'error',

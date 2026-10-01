@@ -8,6 +8,7 @@ Object.defineProperties(configs, {
   nextJs: { enumerable: true, get: () => require('./src/next-js') },
   jest: { enumerable: true, get: () => require('./src/jest') },
   vitest: { enumerable: true, get: () => require('./src/vitest') },
+  playwright: { enumerable: true, get: () => require('./src/playwright') },
 });
 
 module.exports = {

@@ -44,12 +44,12 @@ const universalImportOrderConfig = {
   named: { enabled: true, require: false, cjsExports: false, types: 'types-last' },
 };
 
-// Reserves SCREAMING_SNAKE_CASE for module scope constants. This replaces "@shopify/prefer-module-scope-constants",
-// which we dropped along with the rest of the Shopify plugin. Destructured bindings are exempt because they take their
-// name from whatever they are destructured out of.
-const moduleScopeConstantsNamingConvention = [
+// Reserves SCREAMING_SNAKE_CASE for constants declared with the given modifiers. This replaces the dropped
+// "@shopify/prefer-module-scope-constants" rule. Destructured bindings are exempt because they take their name from
+// whatever they are destructured out of.
+const constantsNamingConvention = (constantModifiers) => [
   'error',
-  { selector: 'variable', modifiers: ['const', 'global'], format: null },
+  { selector: 'variable', modifiers: constantModifiers, format: null },
   { selector: 'variable', modifiers: ['destructured'], format: null },
   {
     selector: 'variable',
@@ -58,23 +58,40 @@ const moduleScopeConstantsNamingConvention = [
   },
 ];
 
+const moduleScopeConstantsNamingConvention = constantsNamingConvention(['const', 'global']);
+const testConstantsNamingConvention = constantsNamingConvention(['const']); // Tests keep constants inside the "describe" block that uses them.
+
 // These globs are shared by the Jest and Vitest configurations, which both scope their rules to test files.
 const testFiles = [
   '**/*.test.ts',
   '**/*.test.tsx',
-  '**/*.spec.ts',
-  '**/*.spec.tsx',
   '**/*.feature.ts',
   '**/*.feature.tsx',
   '**/*.test.js',
   '**/*.test.jsx',
-  '**/*.spec.js',
-  '**/*.spec.jsx',
 ];
 
+// The "*.spec.*" suffix is reserved for Playwright tests, so the Jest and Vitest globs above leave it out.
+const playwrightFiles = ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'];
+
+// API3 repos name each test after the contract it tests, e.g. "Api3ServerV1.sol.ts".
+const hardhatTestFiles = ['**/*.sol.ts', '**/*.sol.js'];
+
+const testSupportFiles = [
+  '**/{test,tests,__tests__,__mocks__,e2e}/**/*.{cjs,cts,js,jsx,mjs,mts,ts,tsx}',
+  '**/{jest,vitest}.setup.{cjs,cts,js,mjs,mts,ts}',
+  '**/global-{setup,teardown}.{cjs,cts,js,mjs,mts,ts}',
+];
+
+const allTestFiles = [...testFiles, ...playwrightFiles, ...hardhatTestFiles, ...testSupportFiles];
+
 module.exports = {
+  allTestFiles,
+  hardhatTestFiles,
   moduleScopeConstantsNamingConvention,
+  playwrightFiles,
   scopeToDefaultFiles,
+  testConstantsNamingConvention,
   testFiles,
   sharedPlugins,
   universalImportOrderConfig,
