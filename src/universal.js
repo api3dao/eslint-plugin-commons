@@ -69,7 +69,6 @@ module.exports = [
         curly: ['error', 'multi-line', 'consistent'],
         eqeqeq: ['error', 'always', { null: 'ignore' }], // Allows "value == null", which matches both null and undefined.
         'no-await-in-loop': 'off', // Too restrictive, often false yields to more verbose code.
-        'no-constant-condition': 'off', // Writing a "while(true)"" loop is often the most readable way to express the intent.
         'no-fallthrough': 'off', // Does not work well with typescript exhaustive enums.
         'no-inline-comments': 'off',
         'no-lonely-if': 'error',
@@ -216,7 +215,7 @@ module.exports = [
         '@typescript-eslint/no-mixed-enums': 'error',
         '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
         '@typescript-eslint/no-non-null-assertion': 'off', // Too restrictive. The inference is often not powerful enough or there is not enough context.
-        '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
+        '@typescript-eslint/no-require-imports': 'off', // Most of our repos are CommonJS, where configuration files, scripts and Jest tests load modules with "require".
         '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
         '@typescript-eslint/no-unnecessary-condition': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful conditionals.
         '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
