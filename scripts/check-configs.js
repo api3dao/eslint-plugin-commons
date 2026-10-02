@@ -54,6 +54,14 @@ const checks = [
     notReported: ['unicorn/import-style'],
   },
   {
+    name: 'universal allows loose comparisons with null',
+    configs: commons.configs.universal,
+    filePath: 'src/example.ts',
+    code: 'export const isMissing = (value?: number | null) => value == null;\n',
+    enabled: ['eqeqeq'],
+    notReported: ['eqeqeq'],
+  },
+  {
     // A single declaration cannot be out of order with another one, so only the sorting of named imports can report it.
     name: 'universal sorts the names inside an import',
     configs: commons.configs.universal,
@@ -280,6 +288,21 @@ const checks = [
     code: 'export const Widget = () => <img src="/a.png" />;\n',
     reports: ['jsx-a11y/alt-text'],
     enabled: ['jsx-a11y/aria-role', 'jsx-a11y/anchor-is-valid'],
+  },
+  {
+    name: 'react keeps browser-only APIs on window',
+    configs: [...commons.configs.universal, ...commons.configs.react],
+    filePath: 'src/theme.ts',
+    code: "export const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;\n",
+    enabled: ['unicorn/no-unnecessary-global-this'],
+    notEnabled: ['unicorn/prefer-global-this'],
+  },
+  {
+    name: 'universal prefers globalThis outside of react',
+    configs: commons.configs.universal,
+    filePath: 'src/theme.ts',
+    code: "export const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;\n",
+    reports: ['unicorn/prefer-global-this'],
   },
   {
     name: 'nextJs applies its plugin rules',

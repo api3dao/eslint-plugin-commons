@@ -67,9 +67,8 @@ module.exports = [
         /* Rule definitions and overrides for standard ESLint rules */
         camelcase: ['error', { allow: ['^.+__factory$'] }], // Typechain generates "<Contract>__factory" bindings that we do not control.
         curly: ['error', 'multi-line', 'consistent'],
-        eqeqeq: 'error',
+        eqeqeq: ['error', 'always', { null: 'ignore' }], // Allows "value == null", which matches both null and undefined.
         'no-await-in-loop': 'off', // Too restrictive, often false yields to more verbose code.
-        'no-constant-condition': 'off', // Writing a "while(true)"" loop is often the most readable way to express the intent.
         'no-fallthrough': 'off', // Does not work well with typescript exhaustive enums.
         'no-inline-comments': 'off',
         'no-lonely-if': 'error',
@@ -141,6 +140,7 @@ module.exports = [
         'unicorn/no-null': 'off', // We use both null and undefined for representing three state objects. We could use a string union instead, but using combination of null and undefined is less verbose.
         'unicorn/no-process-exit': 'off',
         'unicorn/no-top-level-assignment-in-function': 'off', // Every hit across the org is a module scope store or lazy singleton with an exported setter, and the rule has no options to allow that.
+        'unicorn/no-unreadable-array-destructuring': ['error', { maximumIgnoredElements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/no-unreadable-for-of-expression': 'off', // Too strict, it flags readable idioms like "list ?? []" and "new Set(list)".
         'unicorn/no-unreadable-object-destructuring': 'off', // Alternatives are often more verbose and less readable.
         'unicorn/no-unsafe-property-key': 'off', // False positives on template literal types like viem's "Hex". The upstream guard for them is wired to wrong TypeFlags constants, still broken in v76.
@@ -150,6 +150,7 @@ module.exports = [
         'unicorn/prefer-bigint-literals': 'off', // Flags dApp ids defined from strings like BigInt('123...').
         'unicorn/prefer-continue': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
         'unicorn/prefer-early-return': ['error', { maximumStatements: 2 }], // Make it a bit more permissive than the default of 1.
+        'unicorn/prefer-math-min-max': 'off', // Its fix breaks bigint comparisons when the type is inferred.
         'unicorn/prefer-module': 'off', // We use CJS for configuration files and tests. There is no rush to migrate to ESM and the configuration files are probably not yet ready for ESM yet.
         'unicorn/prefer-number-coercion': 'off', // "Number()" turns an empty string into 0, which may not be desirable.
         'unicorn/prefer-simple-sort-comparator': 'off', // Its suggested "a - b" comparator does not work for bigints.
@@ -214,7 +215,7 @@ module.exports = [
         '@typescript-eslint/no-mixed-enums': 'error',
         '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
         '@typescript-eslint/no-non-null-assertion': 'off', // Too restrictive. The inference is often not powerful enough or there is not enough context.
-        '@typescript-eslint/no-require-imports': 'off', // We use a similar rule called "@typescript-eslint/no-var-imports" which bans require imports alltogether.
+        '@typescript-eslint/no-require-imports': 'off', // Most of our repos are CommonJS, where configuration files, scripts and Jest tests load modules with "require".
         '@typescript-eslint/no-shadow': ['error', { ignoreOnInitialization: true }], // "ignoreOnInitialization" permits the common "const x = xs.find((x) => ...)" pattern, where the shadowed binding is not initialized yet.
         '@typescript-eslint/no-unnecessary-condition': 'off', // With "noUncheckedIndexedAccess" disabled in some repos, indexed access is incorrectly typed as always defined, and so the rule flags useful conditionals.
         '@typescript-eslint/no-unsafe-argument': 'off', // Too restrictive, often false yields to more verbose code.
@@ -250,6 +251,7 @@ module.exports = [
           'error',
           {
             ignoreConditionalTests: true, // Its more intuitive to use logical operators in conditionals.
+            ignorePrimitives: { boolean: true, string: true }, // Allow "||" on optional boolean flags and as a fallback for empty strings.
           },
         ],
         '@typescript-eslint/prefer-readonly-parameter-types': 'off', // Too restrictive, often false yields to more verbose code.
@@ -275,6 +277,7 @@ module.exports = [
         'lodash/path-style': 'off', // Can potentially trigger TS errors. Both variants have use cases when they are more readable.
         'lodash/prefer-constant': 'off', // Reaching for "_.constant" is less readable than an arrow returning the value, and it forces a lodash import where none is needed.
         'lodash/prefer-immutable-method': 'off',
+        'lodash/prefer-is-nil': 'off', // The native "value == null" does the same check without a lodash import.
         'lodash/prefer-lodash-method': 'off', // Disagree with this rule. Using the native method is often simpler.
         'lodash/prefer-lodash-typecheck': 'off',
         'lodash/prop-shorthand': 'off',
