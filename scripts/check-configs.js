@@ -2,11 +2,15 @@
 // meant to apply to. A configuration that silently matches nothing still lints "successfully", so without these checks
 // a broken ruleset looks exactly like a passing one.
 
+const path = require('node:path');
+
 const { ESLint } = require('eslint');
 const jestPlugin = require('eslint-plugin-jest');
 const tseslint = require('typescript-eslint');
 
 const commons = require('../index');
+
+const tailwindPluginDirectory = path.dirname(require.resolve('eslint-plugin-better-tailwindcss'));
 
 const typeAwareRules = (pluginName, plugin) =>
   Object.fromEntries(
@@ -264,6 +268,34 @@ const checks = [
     filePath: 'src/example.test.ts',
     code: "export const a = test.only('b');\n",
     notEnabled: ['playwright/'],
+  },
+  {
+    // The plugin reads the theme from a real Tailwind entry file, and silently disables its rules without one.
+    name: 'tailwind applies its rules',
+    configs: [
+      ...commons.configs.universal,
+      ...commons.configs.react,
+      ...commons.configs.tailwind,
+      {
+        settings: {
+          // This repo only has "tailwindcss" as the plugin's peer dependency, so it is resolved from the plugin's
+          // directory. Its own stylesheet stands in for a project's entry file, which would just import it.
+          'better-tailwindcss': {
+            cwd: tailwindPluginDirectory,
+            entryPoint: require.resolve('tailwindcss/index.css', { paths: [tailwindPluginDirectory] }),
+          },
+        },
+      },
+    ],
+    filePath: 'src/widget.tsx',
+    code: 'export const Widget = () => <div className="rounded px-6 py-6" />;\n',
+    reports: ['better-tailwindcss/no-deprecated-classes', 'better-tailwindcss/enforce-canonical-classes'],
+    notEnabled: [
+      'better-tailwindcss/enforce-consistent-class-order',
+      'better-tailwindcss/enforce-consistent-line-wrapping',
+      'better-tailwindcss/enforce-logical-properties',
+      'better-tailwindcss/enforce-shorthand-classes',
+    ],
   },
   {
     name: 'react applies to TSX files',
