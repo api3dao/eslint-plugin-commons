@@ -9,6 +9,7 @@ Object.defineProperties(configs, {
   jest: { enumerable: true, get: () => require('./src/jest') },
   vitest: { enumerable: true, get: () => require('./src/vitest') },
   playwright: { enumerable: true, get: () => require('./src/playwright') },
+  tailwind: { enumerable: true, get: () => require('./src/tailwind') },
 });
 
 module.exports = {

@@ -12,6 +12,8 @@ The modules consists of multiple ESLint configurations supporting wide variety o
   extensions.
 - `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
   which are reserved for Playwright tests.
+- `tailwind` - Linting rules for Tailwind CSS class names, e.g. deprecated, conflicting or unknown classes. Spread it
+  alongside `react` in repos that use Tailwind CSS.
 
 Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
@@ -43,19 +45,6 @@ module.exports = [
 ];
 ```
 
-`configs.jest` and `configs.vitest` both apply to the same test file names, so a repo spreads whichever matches its test
-runner, never both.
-
-`configs.playwright` applies to `*.spec.*` files, so name unit and integration tests `*.test.*` and keep `*.spec.*` for
-Playwright tests. A repo with Playwright tests spreads it next to `configs.jest` or `configs.vitest`.
-
-Hardhat tests are named after the contract they test, e.g. `Api3ServerV1.sol.ts`, and have no configuration of their
-own. `configs.universal` allows PascalCase names for them.
-
-`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`, `*.spec.*`
-and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`, `__tests__`, `__mocks__` or
-`e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
-
 The configurations are plain CommonJS, so they can also be imported from an ESM `eslint.config.js`:
 
 ```js
@@ -80,6 +69,76 @@ We recommend using the following linting commands inside `package.json` scripts:
 
 The `--cache` parameter makes ESLint create a `.eslintcache` file in the root of the project. This file should be put to
 `.gitignore`.
+
+## Configurations
+
+### Test files
+
+`configs.jest` and `configs.vitest` both apply to the same test file names, so a repo spreads whichever matches its test
+runner, never both.
+
+`configs.playwright` applies to `*.spec.*` files, so name unit and integration tests `*.test.*` and keep `*.spec.*` for
+Playwright tests. A repo with Playwright tests spreads it next to `configs.jest` or `configs.vitest`.
+
+Hardhat tests are named after the contract they test, e.g. `Api3ServerV1.sol.ts`, and have no configuration of their
+own. `configs.universal` allows PascalCase names for them.
+
+`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`, `*.spec.*`
+and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`, `__tests__`, `__mocks__` or
+`e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
+
+### Tailwind CSS
+
+`configs.tailwind` reads the Tailwind CSS v4 theme from `src/index.css`. If the CSS file that imports Tailwind lives
+elsewhere, point the plugin at it. In a monorepo, also set `cwd` to the package that installs `tailwindcss`, otherwise
+the plugin cannot find it and silently disables its rules:
+
+```js
+{
+  settings: {
+    'better-tailwindcss': {
+      cwd: 'packages/app',
+      entryPoint: 'src/index.css', // Relative to "cwd".
+    },
+  },
+}
+```
+
+Custom classes are known to the plugin when they are defined with `@utility` or under `@layer components`. Classes
+defined anywhere else, e.g. under `@layer base`, are reported as unknown.
+
+Class order is left to `prettier-plugin-tailwindcss` - the official Tailwind plugin. Point it at the same CSS file, so
+that it knows the project's own utilities, and list the class name helpers, so that it also sorts the classes passed to
+them:
+
+```json
+{
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/index.css",
+  "tailwindFunctions": ["cn", "cva", "clsx"]
+}
+```
+
+#### Tailwind CSS v3
+
+Tailwind CSS v3 keeps the theme in `tailwind.config.js`, which the plugin finds on its own. Unset the entry point in v3
+repos, otherwise the plugin loads `src/index.css` as the JS config and crashes:
+
+```js
+{
+  settings: {
+    'better-tailwindcss': {
+      entryPoint: null,
+    },
+  },
+}
+```
+
+The rules for deprecated, conflicting and canonical classes and for variant order only support v4, so they report
+nothing in v3 repos.
+
+Tailwind CSS v3 repos leave out `tailwindStylesheet`, because the Prettier plugin reads the `tailwind.config.js` next to
+the Prettier config instead.
 
 ## Rules
 
