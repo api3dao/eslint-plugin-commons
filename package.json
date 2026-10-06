@@ -1,6 +1,6 @@
 {
   "name": "@api3/eslint-plugin-commons",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "description": "ESLint configurations used across API3 projects.",
   "license": "MIT",
   "repository": "github:api3dao/eslint-plugin-commons",
