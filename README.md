@@ -2,18 +2,20 @@
 
 > ESLint configurations used across API3 projects.
 
-The modules consists of multiple ESLint configurations supporting wide variety of targets:
+This module consists of multiple ESLint configurations supporting a wide variety of targets:
 
 - `universal` - Linting rules for universal (both FE and BE) JS/TS code (with the emphasis on TS).
 - `react` - Linting rules for React code, including JSX accessibility rules.
 - `nextJs` - Next.js specific rules only. It carries no React or accessibility rules of its own, so spread it alongside
   `react`.
-- `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
-  extensions.
-- `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
-  which are reserved for Playwright tests.
 - `tailwind` - Linting rules for Tailwind CSS class names, e.g. deprecated, conflicting or unknown classes. Spread it
   alongside `react` in repos that use Tailwind CSS.
+- `jest` - Linting rules for Jest tests. They are only applied to JS/TS files with `*.test.*` extensions and to TS files
+  with `*.feature.*` extensions.
+- `vitest` - Linting rules for Vitest tests. They are applied to the same files as `jest`, so spread only one of the
+  two.
+- `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
+  which are reserved for Playwright tests.
 
 Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
@@ -83,9 +85,9 @@ Playwright tests. A repo with Playwright tests spreads it next to `configs.jest`
 Hardhat tests are named after the contract they test, e.g. `Api3ServerV1.sol.ts`, and have no configuration of their
 own. `configs.universal` allows PascalCase names for them.
 
-`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`, `*.spec.*`
-and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`, `__tests__`, `__mocks__` or
-`e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
+`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`,
+`*.feature.*`, `*.spec.*` and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`,
+`__tests__`, `__mocks__` or `e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
 
 ### Tailwind CSS
 
@@ -163,7 +165,7 @@ module.exports = [
   ...commons.configs.universal,
   {
     rules: {
-      'unicorn/filename-case': 'off', // Turns of the kebab-case convention for filenames.
+      'unicorn/filename-case': 'off', // Turns off the kebab-case convention for filenames.
       'import-x/no-default-export': 'off', // Turns off the rule that disallows default exports.
       'import-x/prefer-default-export': 'error', // Turns on the rule that prefers default exports.
     },
@@ -210,11 +212,12 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
    `import-x/order` now sorts both the import statements and the names inside their braces, and the two tools disagree
    on a few cases, so `prettier --write` and `eslint --fix` keep undoing each other there.
 10. Run `eslint --fix` and then clean up whatever is left. Expect some stale `eslint-disable` directives to be reported,
-    because `eslint-plugin-unicorn` renamed a number of rules.
+    because `eslint-plugin-unicorn` renamed a number of rules and v4 turns some rules off, e.g.
+    `import-x/no-default-export` in configuration files.
 
 ## For developers
 
-This sections is intended for developers of this repo.
+This section is intended for developers of this repo.
 
 ### Release
 
