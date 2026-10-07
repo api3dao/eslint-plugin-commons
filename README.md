@@ -60,6 +60,18 @@ ESLint reports a file that no `tsconfig.json` includes as "not found by the proj
 `tsconfig.json` (`.js` files also need `"allowJs": true`), or list it in `allowDefaultProject`, e.g.
 `projectService: { allowDefaultProject: ['eslint.config.js'] }`. A JS only repo can use a `jsconfig.json` instead.
 
+ESLint v10 reads neither `.eslintignore` nor `.gitignore`. To ignore the files listed in `.gitignore`, import it with
+`includeIgnoreFile` from `eslint/config`, which needs an absolute path:
+
+```js
+const path = require('node:path');
+
+const commons = require('@api3/eslint-plugin-commons');
+const { includeIgnoreFile } = require('eslint/config');
+
+module.exports = [includeIgnoreFile(path.join(__dirname, '.gitignore')), ...commons.configs.universal];
+```
+
 ### Linting commands
 
 We recommend using the following linting commands inside `package.json` scripts:
@@ -198,9 +210,11 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
 2. Remove `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` from the repo's own `devDependencies`. The
    configurations ship typescript-eslint v8 themselves. If the repo's own config needs typescript-eslint, depend on
    `typescript-eslint` `^8` instead.
-3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. Move the contents of `.eslintignore` into an
-   `{ ignores: [...] }` config object, and move `parserOptions` under `languageOptions`. Also replace `project` with
-   `projectService: true`, the recommended setup described in [Getting started](#getting-started).
+3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. ESLint v10 no longer reads `.eslintignore`, so move
+   its patterns into an `{ ignores: [...] }` config object. If `.eslintignore` is a symlink to `.gitignore`, delete it
+   and use `includeIgnoreFile` instead, as shown in [Getting started](#getting-started). Move `parserOptions` under
+   `languageOptions`. Also replace `project` with `projectService: true`, the recommended setup described in
+   [Getting started](#getting-started).
 4. Drop `--ext js,ts,tsx,jsx` from the lint script. Flat config decides which files to lint, and these configurations
    already cover `cjs`, `cts`, `js`, `jsx`, `mjs`, `mts`, `ts` and `tsx`.
 5. Rename `import/*` rules and `eslint-disable` comments to `import-x/*`. `eslint-plugin-import` does not support ESLint
