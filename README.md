@@ -23,8 +23,10 @@ Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
 1. Create an `eslint.config.js` configuration file in the repo root.
 2. Import this plugin and spread the desired configuration(s).
-3. Point `languageOptions.parserOptions` at the `tsconfig.json` file(s). The configuration enables type aware rules, so
-   this step is required.
+3. Enable type information in `languageOptions.parserOptions`. The configuration enables type aware rules, so this step
+   is required. Prefer `projectService: true` over listing the `tsconfig.json` files in `project`. It uses the nearest
+   `tsconfig.json` of each file, like editors do, so monorepos and tsconfigs with project references need no extra
+   setup.
 4. Install `eslint` (which is a peer dependency of this module) as a dev dependency.
 
 For example:
@@ -38,9 +40,8 @@ module.exports = [
   {
     languageOptions: {
       parserOptions: {
-        // We focus primarily on TS and for that we need to specify the TS configs which is project specific. The following
-        // is a common monorepo setup (root config and a config for each package).
-        project: ['./tsconfig.json', './packages/*/tsconfig.json'],
+        // Type information comes from the nearest "tsconfig.json" of each linted file.
+        projectService: true,
       },
     },
   },
@@ -55,8 +56,9 @@ import commons from '@api3/eslint-plugin-commons';
 export default [...commons.configs.universal];
 ```
 
-If you are using TS, it's possible that ESLint will complain about `.js` files not being present in the project. This
-can likely be fixed by adding `"allowJs": true` to the `tsconfig.json` file.
+ESLint reports a file that no `tsconfig.json` includes as "not found by the project service". Add the file to a
+`tsconfig.json` (`.js` files also need `"allowJs": true`), or list it in `allowDefaultProject`, e.g.
+`projectService: { allowDefaultProject: ['eslint.config.js'] }`. A JS only repo can use a `jsconfig.json` instead.
 
 ### Linting commands
 
@@ -196,7 +198,8 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
    configurations ship typescript-eslint v8 themselves. If the repo's own config needs typescript-eslint, depend on
    `typescript-eslint` `^8` instead.
 3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. Move the contents of `.eslintignore` into an
-   `{ ignores: [...] }` config object, and move `parserOptions` under `languageOptions`.
+   `{ ignores: [...] }` config object, and move `parserOptions` under `languageOptions`. Also replace `project` with
+   `projectService: true`, the recommended setup described in [Getting started](#getting-started).
 4. Drop `--ext js,ts,tsx,jsx` from the lint script. Flat config decides which files to lint, and these configurations
    already cover `cjs`, `cts`, `js`, `jsx`, `mjs`, `mts`, `ts` and `tsx`.
 5. Rename `import/*` rules and `eslint-disable` comments to `import-x/*`. `eslint-plugin-import` does not support ESLint
