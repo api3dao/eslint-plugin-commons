@@ -71,8 +71,9 @@ We recommend using the following linting commands inside `package.json` scripts:
 }
 ```
 
-The `--cache` parameter makes ESLint create a `.eslintcache` file in the root of the project. This file should be put to
-`.gitignore`.
+The `--cache` parameter makes ESLint lint only the files that changed since the last run. Keep it in the lint scripts,
+especially in repos that use `configs.tailwind`, whose rules make a full run noticeably slower. ESLint stores the cache
+in a `.eslintcache` file in the root of the project. This file should be put to `.gitignore`.
 
 ## Configurations
 
