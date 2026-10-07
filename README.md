@@ -2,18 +2,20 @@
 
 > ESLint configurations used across API3 projects.
 
-The modules consists of multiple ESLint configurations supporting wide variety of targets:
+This module consists of multiple ESLint configurations supporting a wide variety of targets:
 
 - `universal` - Linting rules for universal (both FE and BE) JS/TS code (with the emphasis on TS).
 - `react` - Linting rules for React code, including JSX accessibility rules.
 - `nextJs` - Next.js specific rules only. It carries no React or accessibility rules of its own, so spread it alongside
   `react`.
-- `jest` - Linting rules for Jest tests. Note, that these rules are only applied for JS/TS files with `*.test.*`
-  extensions.
-- `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
-  which are reserved for Playwright tests.
 - `tailwind` - Linting rules for Tailwind CSS class names, e.g. deprecated, conflicting or unknown classes. Spread it
   alongside `react` in repos that use Tailwind CSS.
+- `jest` - Linting rules for Jest tests. They are only applied to JS/TS files with `*.test.*` extensions and to TS files
+  with `*.feature.*` extensions.
+- `vitest` - Linting rules for Vitest tests. They are applied to the same files as `jest`, so spread only one of the
+  two.
+- `playwright` - Linting rules for Playwright tests. They are only applied to JS/TS files with `*.spec.*` extensions,
+  which are reserved for Playwright tests.
 
 Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
@@ -21,8 +23,10 @@ Requires ESLint v10 and Node.js `^22.22.2 || ^24.15.0 || >=26`.
 
 1. Create an `eslint.config.js` configuration file in the repo root.
 2. Import this plugin and spread the desired configuration(s).
-3. Point `languageOptions.parserOptions` at the `tsconfig.json` file(s). The configuration enables type aware rules, so
-   this step is required.
+3. Enable type information in `languageOptions.parserOptions`. The configuration enables type aware rules, so this step
+   is required. Prefer `projectService: true` over listing the `tsconfig.json` files in `project`. It uses the nearest
+   `tsconfig.json` of each file, like editors do, so monorepos and tsconfigs with project references need no extra
+   setup.
 4. Install `eslint` (which is a peer dependency of this module) as a dev dependency.
 
 For example:
@@ -36,9 +40,8 @@ module.exports = [
   {
     languageOptions: {
       parserOptions: {
-        // We focus primarily on TS and for that we need to specify the TS configs which is project specific. The following
-        // is a common monorepo setup (root config and a config for each package).
-        project: ['./tsconfig.json', './packages/*/tsconfig.json'],
+        // Type information comes from the nearest "tsconfig.json" of each linted file.
+        projectService: true,
       },
     },
   },
@@ -53,8 +56,21 @@ import commons from '@api3/eslint-plugin-commons';
 export default [...commons.configs.universal];
 ```
 
-If you are using TS, it's possible that ESLint will complain about `.js` files not being present in the project. This
-can likely be fixed by adding `"allowJs": true` to the `tsconfig.json` file.
+ESLint reports a file that no `tsconfig.json` includes as "not found by the project service". Add the file to a
+`tsconfig.json` (`.js` files also need `"allowJs": true`), or list it in `allowDefaultProject`, e.g.
+`projectService: { allowDefaultProject: ['eslint.config.js'] }`. A JS only repo can use a `jsconfig.json` instead.
+
+ESLint v10 reads neither `.eslintignore` nor `.gitignore`. To ignore the files listed in `.gitignore`, import it with
+`includeIgnoreFile` from `eslint/config`, which needs an absolute path:
+
+```js
+const path = require('node:path');
+
+const commons = require('@api3/eslint-plugin-commons');
+const { includeIgnoreFile } = require('eslint/config');
+
+module.exports = [includeIgnoreFile(path.join(__dirname, '.gitignore')), ...commons.configs.universal];
+```
 
 ### Linting commands
 
@@ -67,8 +83,9 @@ We recommend using the following linting commands inside `package.json` scripts:
 }
 ```
 
-The `--cache` parameter makes ESLint create a `.eslintcache` file in the root of the project. This file should be put to
-`.gitignore`.
+The `--cache` parameter makes ESLint lint only the files that changed since the last run. Keep it in the lint scripts,
+especially in repos that use `configs.tailwind`, whose rules make a full run noticeably slower. ESLint stores the cache
+in a `.eslintcache` file in the root of the project. This file should be put to `.gitignore`.
 
 ## Configurations
 
@@ -83,9 +100,9 @@ Playwright tests. A repo with Playwright tests spreads it next to `configs.jest`
 Hardhat tests are named after the contract they test, e.g. `Api3ServerV1.sol.ts`, and have no configuration of their
 own. `configs.universal` allows PascalCase names for them.
 
-`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`, `*.spec.*`
-and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`, `__tests__`, `__mocks__` or
-`e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
+`configs.universal` relaxes the few rules that do not fit test code in every kind of test file (`*.test.*`,
+`*.feature.*`, `*.spec.*` and `*.sol.{ts,js}`) and in the files that only tests use: anything under a `test`, `tests`,
+`__tests__`, `__mocks__` or `e2e` directory, Jest and Vitest setup files, and global setup and teardown files.
 
 ### Tailwind CSS
 
@@ -163,7 +180,7 @@ module.exports = [
   ...commons.configs.universal,
   {
     rules: {
-      'unicorn/filename-case': 'off', // Turns of the kebab-case convention for filenames.
+      'unicorn/filename-case': 'off', // Turns off the kebab-case convention for filenames.
       'import-x/no-default-export': 'off', // Turns off the rule that disallows default exports.
       'import-x/prefer-default-export': 'error', // Turns on the rule that prefers default exports.
     },
@@ -193,8 +210,11 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
 2. Remove `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` from the repo's own `devDependencies`. The
    configurations ship typescript-eslint v8 themselves. If the repo's own config needs typescript-eslint, depend on
    `typescript-eslint` `^8` instead.
-3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. Move the contents of `.eslintignore` into an
-   `{ ignores: [...] }` config object, and move `parserOptions` under `languageOptions`.
+3. Replace `.eslintrc.*` with an `eslint.config.js` as shown above. ESLint v10 no longer reads `.eslintignore`, so move
+   its patterns into an `{ ignores: [...] }` config object. If `.eslintignore` is a symlink to `.gitignore`, delete it
+   and use `includeIgnoreFile` instead, as shown in [Getting started](#getting-started). Move `parserOptions` under
+   `languageOptions`. Also replace `project` with `projectService: true`, the recommended setup described in
+   [Getting started](#getting-started).
 4. Drop `--ext js,ts,tsx,jsx` from the lint script. Flat config decides which files to lint, and these configurations
    already cover `cjs`, `cts`, `js`, `jsx`, `mjs`, `mts`, `ts` and `tsx`.
 5. Rename `import/*` rules and `eslint-disable` comments to `import-x/*`. `eslint-plugin-import` does not support ESLint
@@ -210,11 +230,12 @@ v4 requires ESLint v10 and flat configuration. To migrate a repo:
    `import-x/order` now sorts both the import statements and the names inside their braces, and the two tools disagree
    on a few cases, so `prettier --write` and `eslint --fix` keep undoing each other there.
 10. Run `eslint --fix` and then clean up whatever is left. Expect some stale `eslint-disable` directives to be reported,
-    because `eslint-plugin-unicorn` renamed a number of rules.
+    because `eslint-plugin-unicorn` renamed a number of rules and v4 turns some rules off, e.g.
+    `import-x/no-default-export` in configuration files.
 
 ## For developers
 
-This sections is intended for developers of this repo.
+This section is intended for developers of this repo.
 
 ### Release
 
